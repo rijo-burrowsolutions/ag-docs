@@ -1,0 +1,119 @@
+/* =========================================
+   AG Framework Extensions (ag-extensions.css)
+   =========================================
+   These are supplementary utility classes to fill
+   common gaps in the base ag.css framework.
+*/
+
+/* 1 — Gap / Gutter (Flexbox & Grid) */
+.ag-x-gap-4  { gap: 4px; }
+.ag-x-gap-8  { gap: 8px; }
+.ag-x-gap-12 { gap: 12px; }
+.ag-x-gap-16 { gap: 16px; }
+.ag-x-gap-20 { gap: 20px; }
+.ag-x-gap-24 { gap: 24px; }
+.ag-x-gap-32 { gap: 32px; }
+
+.ag-x-rg-8   { row-gap: 8px; }
+.ag-x-rg-16  { row-gap: 16px; }
+.ag-x-cg-8   { column-gap: 8px; }
+.ag-x-cg-16  { column-gap: 16px; }
+
+/* 2 — CSS Grid Layout */
+.ag-x-dg  { display: grid; }
+.ag-x-dig { display: inline-grid; }
+
+.ag-x-gc-2  { grid-template-columns: repeat(2, 1fr); }
+.ag-x-gc-3  { grid-template-columns: repeat(3, 1fr); }
+.ag-x-gc-4  { grid-template-columns: repeat(4, 1fr); }
+.ag-x-gc-auto { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+.ag-x-cs-2 { grid-column: span 2; }
+.ag-x-cs-3 { grid-column: span 3; }
+.ag-x-rs-2 { grid-row: span 2; }
+
+/* 3 — Z-Index Scale */
+.ag-x-z-0   { z-index: 0; }
+.ag-x-z-1   { z-index: 1; }
+.ag-x-z-10  { z-index: 10; }
+.ag-x-z-50  { z-index: 50; }
+.ag-x-z-100 { z-index: 100; }
+.ag-x-z-n1  { z-index: -1; }
+.ag-x-z-top { z-index: 9999; }
+
+/* 4 — Border Width & Color */
+.ag-x-bw-1 { border-width: 1px; border-style: solid; }
+.ag-x-bw-2 { border-width: 2px; border-style: solid; }
+.ag-x-bw-4 { border-width: 4px; border-style: solid; }
+
+.ag-x-bc-1 { border-color: var(--c-1, #e84040); }
+.ag-x-bc-5 { border-color: var(--c-5, #e2ddd6); }
+.ag-x-bc-10{ border-color: var(--c-10, #1a1814); }
+
+.ag-x-br-4  { border-radius: 4px; }
+.ag-x-br-8  { border-radius: 8px; }
+.ag-x-br-12 { border-radius: 12px; }
+.ag-x-br-16 { border-radius: 16px; }
+.ag-x-br-24 { border-radius: 24px; }
+.ag-x-br-r  { border-radius: 999px; } /* pill */
+
+.ag-x-bt { border-top: 1px solid var(--c-5, #e2ddd6); }
+.ag-x-bb { border-bottom: 1px solid var(--c-5, #e2ddd6); }
+.ag-x-bl { border-left: 1px solid var(--c-5, #e2ddd6); }
+.ag-x-br { border-right: 1px solid var(--c-5, #e2ddd6); }
+
+/* 5 — Opacity Scale */
+.ag-x-op-0   { opacity: 0; }
+.ag-x-op-10  { opacity: 0.1; }
+.ag-x-op-25  { opacity: 0.25; }
+.ag-x-op-50  { opacity: 0.5; }
+.ag-x-op-75  { opacity: 0.75; }
+.ag-x-op-90  { opacity: 0.9; }
+.ag-x-op-100 { opacity: 1; }
+
+/* 6 — Box Shadow */
+.ag-x-shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06); }
+.ag-x-shadow    { box-shadow: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.05); }
+.ag-x-shadow-lg { box-shadow: 0 8px 32px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06); }
+.ag-x-shadow-xl { box-shadow: 0 20px 60px rgba(0,0,0,.15); }
+.ag-x-shadow-n  { box-shadow: none !important; }
+
+/* 7 — Transition & Animation Helpers */
+.ag-x-tr-all  { transition: all .2s cubic-bezier(.4,0,.2,1); }
+.ag-x-tr-col  { transition: color .2s, background-color .2s; }
+.ag-x-tr-op   { transition: opacity .2s ease; }
+.ag-x-tr-tf   { transition: transform .2s cubic-bezier(.4,0,.2,1); }
+.ag-x-tr-n    { transition: none !important; }
+
+.ag-x-scale-105:hover { transform: scale(1.05); }
+.ag-x-scale-95:active { transform: scale(0.95); }
+.ag-x-rotate-45  { transform: rotate(45deg); }
+.ag-x-rotate-180 { transform: rotate(180deg); }
+
+/* 8 — Min/Max Height & Width */
+.ag-x-mnh-0   { min-height: 0; }
+.ag-x-mnh-100 { min-height: 100vh; }
+.ag-x-mnh-50  { min-height: 50vh; }
+.ag-x-mxh-screen { max-height: 100vh; overflow: auto; }
+
+.ag-x-sq-32  { width: 32px;  height: 32px; }
+.ag-x-sq-40  { width: 40px;  height: 40px; }
+.ag-x-sq-48  { width: 48px;  height: 48px; }
+.ag-x-sq-64  { width: 64px;  height: 64px; }
+.ag-x-sq-80  { width: 80px;  height: 80px; }
+.ag-x-sq-120 { width: 120px; height: 120px; }
+
+/* 9 — Sticky & Position Stacking */
+.ag-x-p-s       { position: sticky; }
+.ag-x-sticky-t0 { position: sticky; top: 0; z-index: 10; }
+.ag-x-inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+
+/* 10 — Scroll Utilities */
+.ag-x-snap-x  { scroll-snap-type: x mandatory; overflow-x: auto; }
+.ag-x-snap-y  { scroll-snap-type: y mandatory; overflow-y: auto; }
+.ag-x-snap-c  { scroll-snap-align: center; }
+.ag-x-snap-s  { scroll-snap-align: start; }
+
+.ag-x-scrollbar-none  { scrollbar-width: none; }
+.ag-x-scrollbar-none::-webkit-scrollbar { display: none; }
+.ag-x-scrollbar-thin  { scrollbar-width: thin; }

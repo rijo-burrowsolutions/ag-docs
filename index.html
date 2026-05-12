@@ -4,9 +4,11 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>AG Framework — Documentation Portal</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23c8392b'/><text x='50' y='70' font-family='sans-serif' font-size='65' font-weight='900' fill='white' text-anchor='middle'>AG</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,700;9..144,900&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ibp-max@3.1.24/ag.css"/>
+<link rel="stylesheet" href="ag-extensions.css"/>
 <style>
 :root {
   --doc-bg: #f5f3ef;
@@ -324,7 +326,7 @@ body.dark-theme mark{background:#b8860b;color:#fff;}
       <p class="hero-sub">A production-grade CSS utility framework built on a responsive grid system, an exhaustive flex utility library, and a token-driven design system. Used internally by IBP-Max.</p>
       <div class="hero-meta">
         <div class="hero-stat"><span class="hero-stat-number">80+</span><span class="hero-stat-label">Flex Classes</span></div>
-        <div class="hero-stat"><span class="hero-stat-number">4</span><span class="hero-stat-label">Breakpoints</span></div>
+        <div class="hero-stat"><span class="hero-stat-number">5</span><span class="hero-stat-label">Breakpoints</span></div>
         <div class="hero-stat"><span class="hero-stat-number">16</span><span class="hero-stat-label">Max Columns</span></div>
         <div class="hero-stat"><span class="hero-stat-number">11</span><span class="hero-stat-label">Color Tokens</span></div>
       </div>
@@ -806,13 +808,21 @@ h6 → font-size: calc(var(--general-font-size) * 0.5)
         <tr><td><code class="inline">.s-tt-l</code></td><td>text-transform</td><td>lowercase</td></tr>
       </tbody></table>
     </div>
-    <div class="subsection-title">Text Decoration</div>
+    <div class="subsection-title">Text Decoration &amp; Effects</div>
     <div class="doc-table-wrap">
       <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
       <tbody>
         <tr><td><code class="inline">.s-td-u</code></td><td>text-decoration</td><td>underline</td></tr>
         <tr><td><code class="inline">.s-td-n</code></td><td>text-decoration</td><td>none</td></tr>
         <tr><td><code class="inline">.s-to-e</code></td><td>text-overflow</td><td>ellipsis</td></tr>
+        <tr><td><code class="inline">.s-fst-n</code></td><td>font-style</td><td>normal</td></tr>
+        <tr><td><code class="inline">.s-fst-i</code></td><td>font-style</td><td>italic <code class="inline">!important</code></td></tr>
+        <tr><td><code class="inline">.t-s-1</code></td><td>text-shadow</td><td>Subtle dark drop shadow</td></tr>
+        <tr><td><code class="inline">.l-h</code></td><td>Animated underline</td><td>Hover reveals colour underline</td></tr>
+        <tr><td><code class="inline">.s-ls-d</code></td><td>list-style</td><td>disc</td></tr>
+        <tr><td><code class="inline">.s-ls-c</code></td><td>list-style</td><td>circle</td></tr>
+        <tr><td><code class="inline">.s-l-c-4</code></td><td>line-clamp</td><td>4 lines (vertical)</td></tr>
+        <tr><td><code class="inline">.s-fs-0</code></td><td>font-size</td><td>0 <code class="inline">!important</code></td></tr>
       </tbody></table>
     </div>
   </section>
@@ -961,7 +971,9 @@ h6 → font-size: calc(var(--general-font-size) * 0.5)
       <tbody>
         <tr><td><code class="inline">.s-cc-1</code> – <code class="inline">.s-cc-5</code></td><td>column-count</td><td>1–5</td></tr>
         <tr><td><code class="inline">.s-bi-ac</code></td><td>break-inside</td><td>avoid-column</td></tr>
-        <tr><td><code class="inline">.s-bi-a</code></td><td>break-inside</td><td>auto</td></tr>
+        <tr><td><code class="inline">.s-bi-a</code> / <code class="inline">.s-bi-ini</code></td><td>break-inside</td><td>auto</td></tr>
+        <tr><td><code class="inline">.s-bi-inh</code></td><td>break-inside</td><td>inherit</td></tr>
+        <tr><td><code class="inline">.s-bi-u</code></td><td>break-inside</td><td>unset</td></tr>
       </tbody></table>
     </div>
     <div class="subsection-title">Vertical Align</div>
@@ -980,7 +992,9 @@ h6 → font-size: calc(var(--general-font-size) * 0.5)
       <tbody>
         <tr><td><code class="inline">.s-wb-ba</code></td><td>word-break</td><td>break-all</td></tr>
         <tr><td><code class="inline">.s-wb-bw</code></td><td>word-break</td><td>break-word</td></tr>
-        <tr><td><code class="inline">.s-wb-ini</code></td><td>word-break</td><td>normal</td></tr>
+        <tr><td><code class="inline">.s-wb-inh</code></td><td>word-break</td><td>inherit</td></tr>
+        <tr><td><code class="inline">.s-wb-ini</code></td><td>word-break</td><td>normal (initial)</td></tr>
+        <tr><td><code class="inline">.s-wb-u</code></td><td>word-break</td><td>unset</td></tr>
       </tbody></table>
     </div>
     <div class="subsection-title">Background Utilities</div>
@@ -1271,189 +1285,6 @@ h6 → font-size: calc(var(--general-font-size) * 0.5)
         <tr><td>Font style (<code class="inline">italic</code>)</td><td><span class="tag" style="background:#2d7d46;color:#fff;">Present</span></td><td><code class="inline">.s-fst-i</code> / <code class="inline">.s-fst-n</code></td></tr>
         <tr><td>Word break</td><td><span class="tag" style="background:#2d7d46;color:#fff;">Present</span></td><td><code class="inline">.s-wb-*</code></td></tr>
         <tr><td>Multi-column text</td><td><span class="tag" style="background:#2d7d46;color:#fff;">Present</span></td><td><code class="inline">.s-cc-*</code></td></tr>
-      </tbody></table>
-    </div>
-  </section>
-
-  <!-- PLAYGROUND GRID -->
-        <tr><td><code class="inline">.s-ta-j</code></td><td>text-align</td><td>justify</td></tr>
-        <tr><td><code class="inline">.s-ta-i</code></td><td>text-align</td><td>inherit</td></tr>
-        <tr><td><code class="inline">.s-to-e</code></td><td>text-overflow</td><td>ellipsis</td></tr>
-        <tr><td><code class="inline">.s-ws-nw</code></td><td>white-space</td><td>nowrap</td></tr>
-        <tr><td><code class="inline">.s-ws-n</code></td><td>white-space</td><td>normal</td></tr>
-        <tr><td><code class="inline">.s-fst-n</code></td><td>font-style</td><td>normal</td></tr>
-        <tr><td><code class="inline">.s-fst-i</code></td><td>font-style</td><td>italic <code class="inline">!important</code></td></tr>
-        <tr><td><code class="inline">.t-s-1</code></td><td>text-shadow</td><td>Subtle dark drop shadow</td></tr>
-        <tr><td><code class="inline">.l-h</code></td><td>Animated underline</td><td>Hover reveals colour underline (same as <code class="inline">p a</code>)</td></tr>
-      </tbody></table>
-    </div>
-    <div class="subsection-title">Word Break</div>
-    <div class="doc-table-wrap">
-      <table class="doc-table"><thead><tr><th>Class</th><th>Value</th></tr></thead>
-      <tbody>
-        <tr><td><code class="inline">.s-wb-ba</code></td><td>break-all</td></tr>
-        <tr><td><code class="inline">.s-wb-bw</code></td><td>break-word</td></tr>
-        <tr><td><code class="inline">.s-wb-inh</code></td><td>inherit</td></tr>
-        <tr><td><code class="inline">.s-wb-ini</code></td><td>normal (initial)</td></tr>
-        <tr><td><code class="inline">.s-wb-u</code></td><td>unset</td></tr>
-      </tbody></table>
-    </div>
-  </section>
-
-  <!-- OBJECT FIT & VISIBILITY -->
-  <section class="doc-section" id="object-visibility">
-    <p class="section-eyebrow">Utilities</p>
-    <h2 class="section-title">Object Fit, Visibility &amp; Overflow</h2>
-    <p class="section-desc">Utilities for image/video fitting, element visibility, overflow control, vertical alignment, and pointer events.</p>
-    <div class="subsection-title">Object Fit &amp; Position</div>
-    <div class="doc-table-wrap">
-      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
-      <tbody>
-        <tr><td><code class="inline">.s-of-cv</code></td><td>object-fit</td><td>cover</td></tr>
-        <tr><td><code class="inline">.s-of-cn</code></td><td>object-fit</td><td>contain</td></tr>
-        <tr><td><code class="inline">.s-of-f</code></td><td>object-fit</td><td>fill</td></tr>
-        <tr><td><code class="inline">.s-op-c</code></td><td>object-position</td><td>center</td></tr>
-        <tr><td><code class="inline">.s-op-t</code></td><td>object-position</td><td>top</td></tr>
-      </tbody></table>
-    </div>
-    <div class="subsection-title">Visibility &amp; Opacity</div>
-    <div class="doc-table-wrap">
-      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
-      <tbody>
-        <tr><td><code class="inline">.s-v-h</code></td><td>visibility</td><td>hidden</td></tr>
-        <tr><td><code class="inline">.s-v-v</code></td><td>visibility</td><td>visible <code class="inline">!important</code></td></tr>
-        <tr><td><code class="inline">.s-op-1</code></td><td>opacity</td><td>1 <code class="inline">!important</code></td></tr>
-        <tr><td><code class="inline">.s-a-n</code></td><td>animation</td><td>none</td></tr>
-        <tr><td><code class="inline">.s-pe-n</code></td><td>pointer-events</td><td>none</td></tr>
-        <tr><td><code class="inline">.visuallyhidden</code></td><td>Accessible hide</td><td>Visually hidden but readable by screen readers (1px clipped)</td></tr>
-      </tbody></table>
-    </div>
-    <div class="subsection-title">Overflow</div>
-    <div class="doc-table-wrap">
-      <table class="doc-table"><thead><tr><th>Class</th><th>Value</th></tr></thead>
-      <tbody>
-        <tr><td><code class="inline">.s-o-h</code></td><td>overflow: hidden</td></tr>
-        <tr><td><code class="inline">.s-o-i</code></td><td>overflow: inherit</td></tr>
-        <tr><td><code class="inline">.s-o-a</code></td><td>overflow: auto</td></tr>
-      </tbody></table>
-    </div>
-    <div class="subsection-title">Vertical Align, Float &amp; Cursor</div>
-    <div class="doc-table-wrap">
-      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
-      <tbody>
-        <tr><td><code class="inline">.s-va-m</code></td><td>vertical-align</td><td>middle</td></tr>
-        <tr><td><code class="inline">.s-va-s</code></td><td>vertical-align</td><td>sub</td></tr>
-        <tr><td><code class="inline">.s-va-t</code></td><td>vertical-align</td><td>top</td></tr>
-        <tr><td><code class="inline">.s-va-b</code></td><td>vertical-align</td><td>bottom</td></tr>
-        <tr><td><code class="inline">.s-f-l</code></td><td>float</td><td>left</td></tr>
-        <tr><td><code class="inline">.s-f-r</code></td><td>float</td><td>right</td></tr>
-        <tr><td><code class="inline">.s-f-n</code></td><td>float</td><td>none</td></tr>
-        <tr><td><code class="inline">.s-c-p</code></td><td>cursor</td><td>pointer</td></tr>
-        <tr><td><code class="inline">.s-b-n</code></td><td>border</td><td>none <code class="inline">!important</code></td></tr>
-        <tr><td><code class="inline">.s-br-2</code></td><td>border-radius</td><td>2px</td></tr>
-        <tr><td><code class="inline">.s-br-50</code></td><td>border-radius</td><td>50% (circle)</td></tr>
-      </tbody></table>
-    </div>
-  </section>
-
-  <!-- MULTI-COLUMN & ORDER -->
-  <section class="doc-section" id="columns-order">
-    <p class="section-eyebrow">Utilities</p>
-    <h2 class="section-title">Multi-Column &amp; Order</h2>
-    <p class="section-desc">CSS multi-column layout utilities for masonry-style text flows, and flex order overrides.</p>
-    <div class="subsection-title">Column Count</div>
-    <div class="doc-table-wrap">
-      <table class="doc-table"><thead><tr><th>Class</th><th>column-count</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr><td><code class="inline">.s-cc-1</code></td><td>1</td><td>Single column (reset)</td></tr>
-        <tr><td><code class="inline">.s-cc-2</code></td><td>2</td><td>Two-column text flow</td></tr>
-        <tr><td><code class="inline">.s-cc-3</code></td><td>3</td><td>Three-column text flow</td></tr>
-        <tr><td><code class="inline">.s-cc-4</code></td><td>4</td><td>Four-column text flow</td></tr>
-        <tr><td><code class="inline">.s-cc-5</code></td><td>5</td><td>Five-column text flow</td></tr>
-        <tr><td><code class="inline">.s-cc-inh</code></td><td>inherit</td><td></td></tr>
-        <tr><td><code class="inline">.s-cc-a / .s-cc-u</code></td><td>unset</td><td></td></tr>
-        <tr><td><code class="inline">.s-bi-ac</code></td><td>break-inside: avoid-column</td><td>Prevents item from splitting across columns</td></tr>
-        <tr><td><code class="inline">.s-bi-a</code></td><td>break-inside: auto</td><td></td></tr>
-      </tbody></table>
-    </div>
-    <div class="subsection-title">Flex Order</div>
-    <div class="doc-table-wrap">
-      <table class="doc-table"><thead><tr><th>Class</th><th>order value</th></tr></thead>
-      <tbody>
-        <tr><td><code class="inline">.s-o-0</code></td><td>0 (default)</td></tr>
-        <tr><td><code class="inline">.s-o-1</code></td><td>1</td></tr>
-        <tr><td><code class="inline">.s-o-2</code></td><td>2</td></tr>
-        <tr><td><code class="inline">.s-o-3</code></td><td>3</td></tr>
-        <tr><td><code class="inline">.s-o-4</code></td><td>4</td></tr>
-        <tr><td><code class="inline">.s-o-5</code></td><td>5</td></tr>
-        <tr><td><code class="inline">.s-o-inh</code></td><td>inherit</td></tr>
-        <tr><td><code class="inline">.s-o-u</code></td><td>unset</td></tr>
-      </tbody></table>
-    </div>
-  </section>
-
-  <!-- IMAGE UTILITIES -->
-  <section class="doc-section" id="images">
-    <p class="section-eyebrow">Utilities</p>
-    <h2 class="section-title">Image Utilities</h2>
-    <p class="section-desc">AG provides lazy-loading hooks, sizing helpers, and card image overlay effects for images.</p>
-    <div class="subsection-title">Lazy Loading</div>
-    <div class="doc-table-wrap">
-      <table class="doc-table"><thead><tr><th>Class / Attribute</th><th>Behaviour</th></tr></thead>
-      <tbody>
-        <tr><td><code class="inline">img.ag-lazy</code></td><td>Shows an animated red spinner placeholder while the image is not yet loaded</td></tr>
-        <tr><td><code class="inline">img.ag-lazy.ag-lazy-s</code></td><td>Image has loaded — applies a subtle fade-in transition (<code class="inline">0.1s cubic-bezier</code>). Add this class via JS after the image loads</td></tr>
-        <tr><td><code class="inline">img:not([src]), img[src=""], img[src*=fake]</code></td><td>Automatically hidden (opacity 0, visibility hidden) — prevents broken image icons</td></tr>
-      </tbody></table>
-    </div>
-    <div class="callout tip"><span class="callout-icon">✦</span><div>Implement lazy loading by setting <code class="inline">src=""</code> initially, using an <code class="inline">IntersectionObserver</code> to swap in the real src, then adding <code class="inline">.ag-lazy-s</code> on the <code class="inline">load</code> event to trigger the fade-in.</div></div>
-    <div class="subsection-title">Card Image Overlays</div>
-    <div class="doc-table-wrap">
-      <table class="doc-table"><thead><tr><th>Class</th><th>Effect</th></tr></thead>
-      <tbody>
-        <tr><td><code class="inline">.ca-ol</code></td><td>Gradient overlay — applies a dark bottom-to-top gradient over the image via <code class="inline">::after</code>, and an inset border frame via <code class="inline">::before</code></td></tr>
-        <tr><td><code class="inline">.ca-sl</code></td><td>Zoom-on-hover — applies a smooth <code class="inline">scale(1.1)</code> to the child <code class="inline">&lt;img&gt;</code> on hover using <code class="inline">translateZ(0)</code> for GPU compositing</td></tr>
-        <tr><td><code class="inline">.ca-m</code></td><td>Absolute positioned marker in the top-right corner of the card (right: 25px, top: 25px)</td></tr>
-        <tr><td><code class="inline">.ca-c</code></td><td>Card content region — adds <code class="inline">margin-bottom: 1.6rem</code></td></tr>
-        <tr><td><code class="inline">.im-w-100</code></td><td>Sets image width to 100px</td></tr>
-        <tr><td><code class="inline">.im-bn</code></td><td>Sets element height to 800px (banner height helper)</td></tr>
-      </tbody></table>
-    </div>
-    <div class="code-block"><div class="code-block-header"><span class="code-lang">HTML</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre><code>&lt;!-- Lazy loaded image with spinner placeholder --&gt;
-&lt;img class="ag-lazy" src="" data-src="photo.jpg" /&gt;
-
-&lt;!-- Card with zoom overlay --&gt;
-&lt;div class="card"&gt;
-  &lt;div class="ca-i ca-sl ca-ol" style="position:relative;overflow:hidden;"&gt;
-    &lt;img src="photo.jpg" class="s-w-100 s-of-cv" style="display:block;" /&gt;
-  &lt;/div&gt;
-  &lt;div class="ca-c"&gt;Card content&lt;/div&gt;
-&lt;/div&gt;</code></pre></div>
-  </section>
-
-  <!-- RESPONSIVE PADDING OVERRIDES -->
-  <section class="doc-section" id="responsive-padding">
-    <p class="section-eyebrow">Utilities</p>
-    <h2 class="section-title">Responsive Padding Overrides</h2>
-    <p class="section-desc">These classes reduce padding at specific breakpoints — useful when desktop spacious padding becomes too heavy on tablet/mobile. They activate at <code class="inline">max-width: 1024px</code>.</p>
-    <div class="callout info"><span class="callout-icon">ℹ</span><div>The naming pattern is <code class="inline">.g-{original-px}-p-{reduced-px}</code>. For example <code class="inline">.g-50-p-10</code> means "if you applied <code class="inline">.p-50</code>, this shrinks it to 10px on ≤1024px screens". Direction suffixes work identically to standard padding classes.</div></div>
-    <div class="doc-table-wrap">
-      <table class="doc-table"><thead><tr><th>Class</th><th>Breakpoint</th><th>Effect</th></tr></thead>
-      <tbody>
-        <tr><td><code class="inline">.g-50-p-10</code></td><td>≤1024px</td><td>padding: 10px</td></tr>
-        <tr><td><code class="inline">.g-50-p-t-10</code></td><td>≤1024px</td><td>padding-top: 10px</td></tr>
-        <tr><td><code class="inline">.g-50-p-b-10</code></td><td>≤1024px</td><td>padding-bottom: 10px</td></tr>
-        <tr><td><code class="inline">.g-50-p-tb-10</code></td><td>≤1024px</td><td>padding-top + bottom: 10px</td></tr>
-        <tr><td><code class="inline">.g-50-p-l-10</code></td><td>≤1024px</td><td>padding-left: 10px</td></tr>
-        <tr><td><code class="inline">.g-50-p-r-10</code></td><td>≤1024px</td><td>padding-right: 10px</td></tr>
-        <tr><td><code class="inline">.g-50-p-lr-10</code></td><td>≤1024px</td><td>padding-left + right: 10px</td></tr>
-        <tr><td><code class="inline">.g-100-p-20</code></td><td>≤1024px</td><td>padding: 20px</td></tr>
-        <tr><td><code class="inline">.g-100-p-lr-10</code></td><td>≤1024px</td><td>padding-left + right: 10px</td></tr>
-        <tr><td><code class="inline">.g-200-p-30</code></td><td>≤1024px</td><td>padding: 30px</td></tr>
-        <tr><td><code class="inline">.g-200-p-lr-30</code></td><td>≤1024px</td><td>padding-left + right: 30px</td></tr>
-        <tr><td><code class="inline">.g-16-p-8</code></td><td>≤1024px</td><td>padding: 8px (and directional variants)</td></tr>
-        <tr><td><code class="inline">.p-lr-10-xl</code></td><td>1025px–1439px only</td><td>padding-left + right: 10px</td></tr>
       </tbody></table>
     </div>
   </section>
@@ -1898,7 +1729,7 @@ setTimeout(() => {
  * replace the text node with HTML that wraps matches in <mark>.
  * We avoid marking inside <textarea>, <script>, <style>, and existing <mark>.
  */
-function highlightTextNodes(el, regex) {
+function highlightTextNodes(el, rawText) {
   const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
     acceptNode(node) {
       const parent = node.parentElement;
@@ -1913,9 +1744,13 @@ function highlightTextNodes(el, regex) {
 
   const matches = [];
   let node;
+  const lowerRaw = rawText.toLowerCase();
   while ((node = walker.nextNode())) {
-    if (regex.test(node.textContent)) matches.push(node);
+    if (node.textContent.toLowerCase().includes(lowerRaw)) matches.push(node);
   }
+
+  const escaped = rawText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(escaped, 'gi');
 
   matches.forEach(textNode => {
     const span = document.createElement('span');
@@ -1926,6 +1761,7 @@ function highlightTextNodes(el, regex) {
   return matches.length > 0;
 }
 
+let searchScrollTimeout = null;
 globalSearch.addEventListener('input', () => {
   if (!sectionOriginals) return; // not ready yet
 
@@ -1971,7 +1807,7 @@ globalSearch.addEventListener('input', () => {
     const rawMatches = (secText.match(regex) || []).length;
     totalMatches += rawMatches;
 
-    highlightTextNodes(sec, new RegExp(escaped, 'gi'));
+    highlightTextNodes(sec, raw);
   });
 
   // Re-bind playgrounds (restored innerHTML breaks event listeners)
@@ -1979,11 +1815,15 @@ globalSearch.addEventListener('input', () => {
   initPlayground('btnEditor',       'btnPreview');
   initPlayground('flexEditor',      'flexEditorPreview');
 
-  // Auto-scroll to first matching section
-  if (firstVisibleSection) {
-    requestAnimationFrame(() => {
-      firstVisibleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+  // Debounced auto-scroll to the exact highlighted match
+  clearTimeout(searchScrollTimeout);
+  if (totalMatches > 0) {
+    searchScrollTimeout = setTimeout(() => {
+      const marks = document.querySelectorAll('mark');
+      if (marks.length > 0) {
+        marks[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 400);
   }
 
   // Show count badge
