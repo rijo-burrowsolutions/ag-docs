@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AG Framework — Documentation Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,700;9..144,900&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ibp-max@3.1.24/ag.css"/>
+<style>
+:root {
+  --doc-bg: #f5f3ef;
+  --doc-surface: #ffffff;
+  --doc-surface-2: #f0ede8;
+  --doc-border: #e2ddd6;
+  --doc-text: #1a1814;
+  --doc-text-muted: #6b6560;
+  --doc-accent: #c8392b;
+  --doc-accent-2: #e8a020;
+  --doc-code-bg: #1c1a17;
+  --doc-code-text: #e8e2d9;
+  --doc-sidebar-w: 260px;
+  --doc-nav-h: 56px;
+  --doc-radius: 6px;
+  --doc-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
+  --doc-shadow-lg: 0 8px 32px rgba(0,0,0,.1);
+  --mono: 'DM Mono', monospace;
+  --display: 'Fraunces', serif;
+  --sans: 'Syne', sans-serif;
+  --transition: 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+body.dark-theme {
+  --doc-bg: #13110f; --doc-surface: #1e1b17; --doc-surface-2: #252118;
+  --doc-border: #322d26; --doc-text: #f0ead9; --doc-text-muted: #9b9188;
+  --doc-code-bg: #0d0b09; --doc-code-text: #e8e2d9;
+  --doc-shadow: 0 1px 3px rgba(0,0,0,.3), 0 4px 12px rgba(0,0,0,.2);
+  --c-1:#e84040;--c-2:#c0392b;--c-3:#2a2520;--c-4:#1e1b17;--c-5:#3a3530;
+  --c-6:#555050;--c-7:#383330;--c-8:#8a8580;--c-9:#b0aaa0;--c-10:#f0ead9;
+  --c-11:#ffffff;--t-c:#f0ead9;
+  background-color:var(--doc-bg);color:var(--doc-text);
+}
+body.dark-theme .a-b-1{color:#fff!important;}
+body.dark-theme .a-b-2{color:var(--doc-text)!important;border-color:var(--doc-accent);}
+body.dark-theme .a-b-2:hover{background-color:var(--doc-accent);color:#fff!important;}
+body.dark-theme .a-b-3{background-color:#2a2520!important;color:var(--doc-text)!important;}
+body.dark-theme .f-b-1{background:#f0ead9!important;color:#1a1814!important;}
+body.dark-theme .card{background:var(--doc-surface)!important;color:var(--doc-text);}
+body.dark-theme input,body.dark-theme select,body.dark-theme textarea{
+  background:var(--doc-surface-2)!important;color:var(--doc-text)!important;
+  border-color:var(--doc-border)!important;
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:var(--sans);background:var(--doc-bg);color:var(--doc-text);margin:0;min-height:100vh;transition:background var(--transition),color var(--transition);}
+
+/* NAV */
+.doc-nav{position:fixed;top:0;left:0;right:0;height:var(--doc-nav-h);background:var(--doc-surface);border-bottom:1px solid var(--doc-border);display:flex;align-items:center;padding:0 24px;z-index:1000;gap:16px;transition:background var(--transition),border-color var(--transition);}
+.doc-nav-logo{font-family:var(--display);font-weight:900;font-size:1.2rem;color:var(--doc-accent);letter-spacing:-0.02em;text-decoration:none;flex-shrink:0;}
+.doc-nav-logo span{color:var(--doc-text);font-weight:300;}
+.doc-nav-search{flex:1;max-width:380px;position:relative;margin-left:24px;}
+.doc-nav-search input{width:100%;padding:7px 80px 7px 36px;border:1px solid var(--doc-border);border-radius:var(--doc-radius);background:var(--doc-surface-2);color:var(--doc-text);font-family:var(--mono);font-size:0.78rem;outline:none;transition:border-color var(--transition);}
+.doc-nav-search input:focus{border-color:var(--doc-accent);}
+.doc-nav-search::before{content:"⌕";position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--doc-text-muted);font-size:1rem;pointer-events:none;}
+/* search result counter badge */
+.search-result-count{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:0.65rem;color:var(--doc-accent);background:color-mix(in srgb,var(--doc-accent) 10%,transparent);padding:2px 7px;border-radius:20px;pointer-events:none;display:none;white-space:nowrap;}
+.doc-nav-actions{margin-left:auto;display:flex;align-items:center;gap:12px;}
+.theme-toggle{background:var(--doc-surface-2);border:1px solid var(--doc-border);border-radius:20px;padding:4px 12px;cursor:pointer;font-family:var(--mono);font-size:0.75rem;color:var(--doc-text-muted);display:flex;align-items:center;gap:6px;transition:all var(--transition);white-space:nowrap;}
+.theme-toggle:hover{border-color:var(--doc-accent);color:var(--doc-accent);}
+.theme-toggle .icon{font-size:0.9rem;}
+.version-badge{font-family:var(--mono);font-size:0.7rem;background:var(--doc-accent);color:#fff;padding:3px 8px;border-radius:3px;letter-spacing:0.04em;}
+
+/* LAYOUT */
+.doc-layout{display:flex;padding-top:var(--doc-nav-h);min-height:100vh;}
+
+/* SIDEBAR */
+.doc-sidebar{width:var(--doc-sidebar-w);flex-shrink:0;position:fixed;top:var(--doc-nav-h);bottom:0;left:0;overflow-y:auto;background:var(--doc-surface);border-right:1px solid var(--doc-border);padding:20px 0 40px;scrollbar-width:thin;scrollbar-color:var(--doc-border) transparent;transition:background var(--transition),border-color var(--transition);z-index:100;}
+.sidebar-group{margin-bottom:6px;}
+.sidebar-group-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--doc-text-muted);padding:14px 20px 6px;display:block;}
+.sidebar-link{display:block;padding:7px 20px 7px 24px;font-size:0.83rem;color:var(--doc-text-muted);text-decoration:none;transition:all var(--transition);border-left:3px solid transparent;font-family:var(--sans);font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sidebar-link:hover{color:var(--doc-text);background:var(--doc-surface-2);}
+.sidebar-link.active{color:var(--doc-accent);border-left-color:var(--doc-accent);background:color-mix(in srgb,var(--doc-accent) 8%,transparent);font-weight:600;}
+
+/* MAIN */
+.doc-main{margin-left:var(--doc-sidebar-w);flex:1;padding:48px 48px 80px;max-width:960px;}
+
+/* SECTIONS */
+.doc-section{margin-bottom:80px;scroll-margin-top:calc(var(--doc-nav-h) + 24px);}
+/* ====== BUG FIX 1: section-level hiding for global search ====== */
+.doc-section.gs-hidden{display:none!important;}
+
+.section-eyebrow{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--doc-accent);margin-bottom:6px;}
+.section-title{font-family:var(--display);font-weight:700;font-size:2rem;margin:0 0 8px;letter-spacing:-0.03em;line-height:1.1;color:var(--doc-text);}
+.section-desc{font-size:0.92rem;color:var(--doc-text-muted);max-width:640px;line-height:1.65;margin:0 0 32px;}
+.section-divider{height:1px;background:linear-gradient(to right,var(--doc-border),transparent);margin:48px 0;}
+.subsection{margin-bottom:48px;}
+.subsection-title{font-family:var(--sans);font-weight:700;font-size:1rem;margin:0 0 16px;color:var(--doc-text);display:flex;align-items:center;gap:10px;}
+.subsection-title::after{content:"";height:1px;flex:1;background:var(--doc-border);}
+
+/* CODE BLOCKS */
+.code-block{background:var(--doc-code-bg);border-radius:var(--doc-radius);overflow:hidden;margin:12px 0 24px;box-shadow:var(--doc-shadow);}
+.code-block-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.03);}
+.code-lang{font-family:var(--mono);font-size:0.68rem;color:rgba(255,255,255,0.3);letter-spacing:0.1em;text-transform:uppercase;}
+.copy-btn{font-family:var(--mono);font-size:0.68rem;color:rgba(255,255,255,0.4);background:none;border:none;cursor:pointer;padding:2px 8px;border-radius:3px;transition:all var(--transition);}
+.copy-btn:hover{color:#fff;background:rgba(255,255,255,0.1);}
+.code-block pre{margin:0;padding:18px 20px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent;}
+.code-block code{font-family:var(--mono);font-size:0.82rem;color:var(--doc-code-text);line-height:1.7;white-space:pre;}
+code.inline{font-family:var(--mono);font-size:0.82em;background:var(--doc-surface-2);color:var(--doc-accent);padding:2px 6px;border-radius:3px;border:1px solid var(--doc-border);}
+
+/* ====== BUG FIX 2: PLAYGROUND — resizable preview, min-height:250px ====== */
+.playground{background:var(--doc-surface);border:1px solid var(--doc-border);border-radius:10px;overflow:hidden;box-shadow:var(--doc-shadow);margin:16px 0 32px;}
+.playground-header{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--doc-border);background:var(--doc-surface-2);}
+.playground-dot{width:10px;height:10px;border-radius:50%;}
+.playground-dot:nth-child(1){background:#ff5f57;}
+.playground-dot:nth-child(2){background:#febc2e;}
+.playground-dot:nth-child(3){background:#28c840;}
+.playground-label{font-family:var(--mono);font-size:0.7rem;color:var(--doc-text-muted);margin-left:4px;}
+.playground-body{display:grid;grid-template-columns:1fr 1fr;}
+@media(max-width:720px){.playground-body{grid-template-columns:1fr;}}
+.playground-editor{border-right:1px solid var(--doc-border);display:flex;flex-direction:column;}
+.playground-editor-label,.playground-preview-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--doc-text-muted);padding:8px 14px 4px;text-transform:uppercase;background:var(--doc-surface);border-bottom:1px solid var(--doc-border);}
+/* FIX: min-height 250px on textarea */
+.playground-textarea{flex:1;min-height:250px;padding:16px;font-family:var(--mono);font-size:0.8rem;line-height:1.65;background:var(--doc-code-bg);color:var(--doc-code-text);border:none;outline:none;resize:vertical;tab-size:2;}
+/* FIX: preview wrapper is resizable with min-height 250px */
+.playground-preview-wrap{resize:vertical;overflow:auto;min-height:250px;display:flex;flex-direction:column;}
+.playground-preview{padding:20px;flex:1;min-height:250px;overflow:auto;background:var(--doc-bg);}
+
+/* TABLES */
+.doc-table-wrap{overflow-x:auto;margin:0 0 24px;border-radius:var(--doc-radius);border:1px solid var(--doc-border);}
+.doc-table{width:100%;border-collapse:collapse;font-size:0.83rem;}
+.doc-table th{text-align:left;padding:10px 16px;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--doc-text-muted);background:var(--doc-surface-2);border-bottom:1px solid var(--doc-border);white-space:nowrap;}
+.doc-table td{padding:9px 16px;border-bottom:1px solid var(--doc-border);vertical-align:middle;color:var(--doc-text);font-family:var(--sans);font-size:0.83rem;}
+.doc-table tr:last-child td{border-bottom:none;}
+.doc-table tr:hover td{background:var(--doc-surface-2);}
+.doc-table td code.inline{font-size:0.78rem;}
+
+/* TABLE SEARCH */
+.table-search{width:100%;padding:10px 14px;border:1px solid var(--doc-border);border-radius:var(--doc-radius);background:var(--doc-surface);color:var(--doc-text);font-family:var(--mono);font-size:0.8rem;outline:none;margin-bottom:12px;transition:border-color var(--transition);}
+.table-search:focus{border-color:var(--doc-accent);}
+
+/* ====== BUG FIX 1: highlight marks ====== */
+mark{background:#ffe066;color:#1a1814;border-radius:2px;padding:0 1px;}
+body.dark-theme mark{background:#b8860b;color:#fff;}
+.search-hidden{display:none!important;}
+
+/* COLOR PALETTE */
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:32px;}
+.color-swatch{border-radius:8px;overflow:hidden;border:1px solid var(--doc-border);box-shadow:var(--doc-shadow);}
+.color-swatch-preview{height:64px;width:100%;}
+.color-swatch-info{padding:10px 12px;background:var(--doc-surface);}
+.color-swatch-name{font-family:var(--mono);font-size:0.72rem;color:var(--doc-text-muted);display:block;margin-bottom:2px;}
+.color-swatch-var{font-family:var(--mono);font-size:0.68rem;color:var(--doc-accent);}
+
+/* TYPOGRAPHY SCALE */
+.type-scale{margin-bottom:32px;}
+.type-scale-row{display:flex;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--doc-border);}
+.type-scale-label{font-family:var(--mono);font-size:0.7rem;color:var(--doc-text-muted);width:80px;flex-shrink:0;}
+.type-scale-value{font-family:var(--mono);font-size:0.65rem;color:var(--doc-text-muted);width:60px;flex-shrink:0;}
+.type-scale-sample{font-family:var(--sans);color:var(--doc-text);line-height:1;}
+
+/* BUTTON ROW */
+.button-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:20px;background:var(--doc-surface-2);border-radius:var(--doc-radius);margin-bottom:16px;border:1px solid var(--doc-border);}
+
+/* GRID DEMO */
+.grid-demo-col{background:color-mix(in srgb,var(--doc-accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--doc-accent) 30%,transparent);border-radius:3px;padding:10px 8px;font-family:var(--mono);font-size:0.7rem;color:var(--doc-accent);text-align:center;}
+
+/* BREAKPOINTS */
+.bp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:24px;}
+.bp-card{background:var(--doc-surface);border:1px solid var(--doc-border);border-radius:var(--doc-radius);padding:16px;box-shadow:var(--doc-shadow);}
+.bp-size{font-family:var(--display);font-size:1.8rem;font-weight:900;color:var(--doc-accent);line-height:1;margin-bottom:4px;}
+.bp-label{font-family:var(--mono);font-size:0.7rem;color:var(--doc-text-muted);margin-bottom:8px;}
+.bp-cols{font-family:var(--sans);font-size:0.8rem;color:var(--doc-text);font-weight:600;}
+
+/* NAMING */
+.naming-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.naming-card{background:var(--doc-surface);border:1px solid var(--doc-border);border-radius:var(--doc-radius);padding:20px;box-shadow:var(--doc-shadow);}
+.naming-card-title{font-family:var(--mono);font-size:0.75rem;color:var(--doc-text-muted);letter-spacing:0.08em;text-transform:uppercase;margin:0 0 10px;}
+.naming-example{display:flex;flex-wrap:wrap;gap:0;margin:8px 0;align-items:center;}
+.naming-part{font-family:var(--mono);font-size:0.82rem;padding:4px 8px;border-radius:3px;color:#fff;}
+.naming-part.np-1{background:#c8392b;} .naming-part.np-2{background:#e8a020;color:#1a1814;} .naming-part.np-3{background:#2d7d46;} .naming-part.np-4{background:#2563ac;}
+.naming-part.np-sep{color:var(--doc-text-muted);padding:4px 2px;font-size:0.8rem;}
+.naming-meaning{font-size:0.78rem;color:var(--doc-text-muted);margin-top:4px;}
+
+/* CALLOUT */
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:var(--doc-radius);margin-bottom:24px;font-size:0.85rem;line-height:1.6;}
+.callout.info{background:color-mix(in srgb,#2563ac 8%,transparent);border:1px solid color-mix(in srgb,#2563ac 20%,transparent);color:var(--doc-text);}
+.callout.tip{background:color-mix(in srgb,#2d7d46 8%,transparent);border:1px solid color-mix(in srgb,#2d7d46 20%,transparent);color:var(--doc-text);}
+.callout.warn{background:color-mix(in srgb,#e8a020 8%,transparent);border:1px solid color-mix(in srgb,#e8a020 20%,transparent);color:var(--doc-text);}
+.callout-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+/* TAGS */
+.tag{display:inline-block;font-family:var(--mono);font-size:0.65rem;padding:2px 7px;border-radius:3px;letter-spacing:0.05em;font-weight:500;vertical-align:middle;}
+.tag.new{background:#2d7d46;color:#fff;} .tag.responsive{background:#2563ac;color:#fff;} .tag.utility{background:var(--doc-accent);color:#fff;}
+
+/* HERO */
+.doc-hero{padding:48px 0 64px;border-bottom:1px solid var(--doc-border);margin-bottom:64px;}
+.hero-kicker{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--doc-accent);margin-bottom:12px;display:block;}
+.hero-title{font-family:var(--display);font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;margin:0 0 16px;line-height:1.0;letter-spacing:-0.04em;color:var(--doc-text);}
+.hero-title em{font-style:normal;color:var(--doc-accent);}
+.hero-sub{font-size:1rem;color:var(--doc-text-muted);max-width:520px;line-height:1.7;margin:0 0 28px;font-family:var(--sans);font-weight:400;}
+.hero-meta{display:flex;gap:24px;flex-wrap:wrap;}
+.hero-stat{display:flex;flex-direction:column;}
+.hero-stat-number{font-family:var(--display);font-size:1.8rem;font-weight:900;color:var(--doc-text);line-height:1;}
+.hero-stat-label{font-family:var(--mono);font-size:0.65rem;color:var(--doc-text-muted);text-transform:uppercase;letter-spacing:0.08em;}
+
+/* SCROLL PROGRESS */
+.scroll-progress{position:fixed;top:var(--doc-nav-h);left:0;height:2px;background:var(--doc-accent);z-index:999;transition:width 0.1s linear;}
+
+/* no-results banner */
+.search-no-results{display:none;text-align:center;padding:60px 20px;font-family:var(--mono);font-size:0.88rem;color:var(--doc-text-muted);}
+.search-no-results strong{color:var(--doc-accent);}
+
+/* HAMBURGER BUTTON */
+.sidebar-toggle{display:none;align-items:center;justify-content:center;width:36px;height:36px;background:var(--doc-surface-2);border:1px solid var(--doc-border);border-radius:var(--doc-radius);cursor:pointer;flex-shrink:0;transition:all var(--transition);}
+.sidebar-toggle:hover{border-color:var(--doc-accent);color:var(--doc-accent);}
+.sidebar-toggle svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+
+/* SIDEBAR OVERLAY (mobile) */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99;opacity:0;transition:opacity 0.25s ease;}
+.sidebar-overlay.active{opacity:1;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .sidebar-toggle{display:flex;}
+  .doc-sidebar{
+    display:block;
+    transform:translateX(-100%);
+    transition:transform 0.28s cubic-bezier(0.4,0,0.2,1),box-shadow 0.28s;
+    box-shadow:none;
+    z-index:200;
+  }
+  .doc-sidebar.open{
+    transform:translateX(0);
+    box-shadow:var(--doc-shadow-lg);
+  }
+  .sidebar-overlay{display:block;}
+  .doc-main{margin-left:0;padding:32px 20px 60px;}
+  .naming-grid{grid-template-columns:1fr;}
+  .doc-nav-search{max-width:180px;}
+}
+</style>
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<nav class="doc-nav">
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">
+    <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <a href="#intro" class="doc-nav-logo">AG<span>/docs</span></a>
+  <div class="doc-nav-search">
+    <input type="text" id="globalSearch" placeholder="Deep search: classes, tables, descriptions…" autocomplete="off"/>
+    <span class="search-result-count" id="searchCount"></span>
+  </div>
+  <div class="doc-nav-actions">
+    <span class="version-badge">v3.1.24</span>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <span class="icon" id="themeIcon">☽</span>
+      <span id="themeLabel">Dark</span>
+    </button>
+  </div>
+</nav>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="doc-sidebar" id="sidebar">
+  <div class="sidebar-group">
+    <span class="sidebar-group-label">Getting Started</span>
+    <a class="sidebar-link" href="#intro">Introduction</a>
+    <a class="sidebar-link" href="#install">Installation</a>
+    <a class="sidebar-link" href="#naming">Naming Conventions</a>
+  </div>
+  <div class="sidebar-group">
+    <span class="sidebar-group-label">Design Tokens</span>
+    <a class="sidebar-link" href="#colors">Color Palette</a>
+    <a class="sidebar-link" href="#typography">Typography Scale</a>
+    <a class="sidebar-link" href="#font-weights">Font Weights</a>
+    <a class="sidebar-link" href="#line-heights">Line Heights</a>
+  </div>
+  <div class="sidebar-group">
+    <span class="sidebar-group-label">Layout</span>
+    <a class="sidebar-link" href="#grid">Grid System</a>
+    <a class="sidebar-link" href="#breakpoints">Breakpoints</a>
+    <a class="sidebar-link" href="#grid-padding">Grid Padding</a>
+  </div>
+  <div class="sidebar-group">
+    <span class="sidebar-group-label">Components</span>
+    <a class="sidebar-link" href="#buttons">Buttons</a>
+    <a class="sidebar-link" href="#cards">Cards</a>
+  </div>
+  <div class="sidebar-group">
+    <span class="sidebar-group-label">Utilities</span>
+    <a class="sidebar-link" href="#flex">Flex Utilities</a>
+    <a class="sidebar-link" href="#spacing">Spacing (Padding)</a>
+    <a class="sidebar-link" href="#margin">Spacing (Margin)</a>
+    <a class="sidebar-link" href="#text-align">Text &amp; Alignment</a>
+    <a class="sidebar-link" href="#display">Display</a>
+    <a class="sidebar-link" href="#sizing">Sizing &amp; Aspect Ratios</a>
+    <a class="sidebar-link" href="#position">Position</a>
+    <a class="sidebar-link" href="#misc">Overflow, Float &amp; More</a>
+    <a class="sidebar-link" href="#color-utils">Color Utilities</a>
+    <a class="sidebar-link" href="#images">Image Utilities</a>
+    <a class="sidebar-link" href="#responsive-padding">Responsive Padding</a>
+  </div>
+  <div class="sidebar-group">
+    <span class="sidebar-group-label">Extension Guide</span>
+    <a class="sidebar-link" href="#whats-missing">What's Missing</a>
+  </div>
+  <div class="sidebar-group">
+    <span class="sidebar-group-label">Playground</span>
+    <a class="sidebar-link" href="#playground-grid">Live Grid Editor</a>
+    <a class="sidebar-link" href="#playground-buttons">Live Button Editor</a>
+    <a class="sidebar-link" href="#playground-flex">Live Flex Editor</a>
+  </div>
+</aside>
+
+<div class="doc-layout">
+<main class="doc-main" id="docMain">
+
+  <div class="search-no-results" id="searchNoResults">No matches found for &ldquo;<strong id="searchNoResultsQ"></strong>&rdquo; — try a shorter keyword.</div>
+
+  <!-- INTRO -->
+  <section class="doc-section" id="intro">
+    <div class="doc-hero">
+      <span class="hero-kicker">ibp-max · ag.css · v3.1.24</span>
+      <h1 class="hero-title">Agora<br/><em>Framework</em></h1>
+      <p class="hero-sub">A production-grade CSS utility framework built on a responsive grid system, an exhaustive flex utility library, and a token-driven design system. Used internally by IBP-Max.</p>
+      <div class="hero-meta">
+        <div class="hero-stat"><span class="hero-stat-number">80+</span><span class="hero-stat-label">Flex Classes</span></div>
+        <div class="hero-stat"><span class="hero-stat-number">4</span><span class="hero-stat-label">Breakpoints</span></div>
+        <div class="hero-stat"><span class="hero-stat-number">16</span><span class="hero-stat-label">Max Columns</span></div>
+        <div class="hero-stat"><span class="hero-stat-number">11</span><span class="hero-stat-label">Color Tokens</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section class="doc-section" id="install">
+    <p class="section-eyebrow">Setup</p>
+    <h2 class="section-title">Installation</h2>
+    <p class="section-desc">Drop in the CDN link inside your <code class="inline">&lt;head&gt;</code>. No build step, no JavaScript dependency. Pure CSS.</p>
+    <div class="code-block">
+      <div class="code-block-header"><span class="code-lang">HTML</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code>&lt;!-- CDN (Recommended) --&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ibp-max@3.1.24/ag.css"&gt;</code></pre>
+    </div>
+    <div class="callout info"><span class="callout-icon">ℹ</span><div>The framework requires CSS custom properties (variables) to be defined. Your theme file must set the <code class="inline">:root</code> variables listed in the Design Tokens section below, or the framework defaults will be used.</div></div>
+    <div class="subsection-title">Required Root Variables</div>
+    <div class="code-block">
+      <div class="code-block-header"><span class="code-lang">CSS</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code>:root {
+  --c-1: #e84040;       /* accent / primary */
+  --c-2: #c0392b;       /* accent-dark */
+  --c-3: #f5f3ef;       /* surface-light */
+  --c-4: #eeebe5;       /* surface */
+  --c-5: #e2ddd6;       /* border-light */
+  --c-6: #b0aaa0;       /* muted */
+  --c-7: #d0ccc6;       /* surface-hover */
+  --c-8: #888480;       /* text-muted */
+  --c-9: #555050;       /* text-secondary */
+  --c-10: #1a1814;      /* text-primary / dark */
+  --c-11: #000000;      /* absolute-dark */
+  --p-f: 'Your Primary Font', sans-serif;
+  --s-f: 'Your Secondary Font', sans-serif;
+  --poppins: 'Poppins', sans-serif;
+  --f-s-0: 0.625rem; --f-s-1: 0.75rem; --f-s-2: 0.875rem; --f-s-3: 1rem;
+  --f-s-4: 1.125rem; --f-s-5: 1.25rem; --f-s-6: 1.5rem;  --f-s-7: 2rem;
+  --f-s-8: 2.5rem;   --f-s-9: 3rem;    --f-s-10: 4rem;   --f-s-11: 5rem;
+  --f-w-1:100; --f-w-2:200; --f-w-3:300; --f-w-4:400; --f-w-5:500;
+  --f-w-6:600; --f-w-7:700; --f-w-b:bold; --f-w-n:normal;
+  --l-h-1:1; --l-h-2:1.25; --l-h-3:1.5; --l-h-4:2;
+  --t-c: #1a1814; --body-font: 1rem; --general-font-size: 2rem; --gcs: 0.6rem;
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- NAMING -->
+  <section class="doc-section" id="naming">
+    <p class="section-eyebrow">Conventions</p>
+    <h2 class="section-title">Naming Guide</h2>
+    <p class="section-desc">AG uses a compact, segment-based naming system. Each class name encodes the property namespace, sub-property, and value — separated by hyphens.</p>
+    <div class="naming-grid">
+      <div class="naming-card">
+        <p class="naming-card-title">Flex Utilities — <code class="inline">s-f-*</code></p>
+        <div class="naming-example">
+          <span class="naming-part np-1">s</span><span class="naming-part np-sep">-</span>
+          <span class="naming-part np-2">f</span><span class="naming-part np-sep">-</span>
+          <span class="naming-part np-3">jc</span><span class="naming-part np-sep">-</span>
+          <span class="naming-part np-4">c</span>
+        </div>
+        <p class="naming-meaning"><strong>s</strong> = style · <strong>f</strong> = flex · <strong>jc</strong> = justify-content · <strong>c</strong> = center</p>
+        <p class="naming-meaning">Segments: <code class="inline">jc</code> justify-content · <code class="inline">ji</code> justify-items · <code class="inline">js</code> justify-self · <code class="inline">ac</code> align-content · <code class="inline">ai</code> align-items · <code class="inline">as</code> align-self · <code class="inline">fd</code> flex-direction · <code class="inline">fw</code> flex-wrap · <code class="inline">fg</code> flex-grow · <code class="inline">fs</code> flex-shrink · <code class="inline">fb</code> flex-basis</p>
+      </div>
+      <div class="naming-card">
+        <p class="naming-card-title">Padding — <code class="inline">p-*</code></p>
+        <div class="naming-example">
+          <span class="naming-part np-1">p</span><span class="naming-part np-sep">-</span>
+          <span class="naming-part np-2">lr</span><span class="naming-part np-sep">-</span>
+          <span class="naming-part np-3">16</span>
+        </div>
+        <p class="naming-meaning"><strong>p</strong> = padding · <strong>lr</strong> = left + right · <strong>16</strong> = 16px</p>
+        <p class="naming-meaning">Direction codes: <code class="inline">t</code> top · <code class="inline">b</code> bottom · <code class="inline">l</code> left · <code class="inline">r</code> right · <code class="inline">tb</code> top+bottom · <code class="inline">lr</code> left+right · (none) all sides</p>
+      </div>
+      <div class="naming-card">
+        <p class="naming-card-title">Buttons — <code class="inline">a-b-*</code></p>
+        <div class="naming-example">
+          <span class="naming-part np-1">a</span><span class="naming-part np-sep">-</span>
+          <span class="naming-part np-2">b</span><span class="naming-part np-sep">-</span>
+          <span class="naming-part np-3">1</span>
+        </div>
+        <p class="naming-meaning"><strong>a</strong> = anchor/action · <strong>b</strong> = button · <strong>1–5</strong> = variant index</p>
+        <p class="naming-meaning">Variants: <code class="inline">a-b-1</code> solid gradient · <code class="inline">a-b-2</code> outlined · <code class="inline">a-b-3</code> ghost · <code class="inline">a-b-4</code> bare · <code class="inline">a-b-5</code> compact · <code class="inline">f-b-1</code> fab/icon</p>
+      </div>
+      <div class="naming-card">
+        <p class="naming-card-title">Value Shorthands</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
+          <code class="inline">c</code>&nbsp;= center&nbsp; <code class="inline">fs</code>&nbsp;= flex-start&nbsp; <code class="inline">fe</code>&nbsp;= flex-end&nbsp;
+          <code class="inline">sb</code>&nbsp;= space-between&nbsp; <code class="inline">sa</code>&nbsp;= space-around&nbsp; <code class="inline">se</code>&nbsp;= space-evenly&nbsp;
+          <code class="inline">w</code>&nbsp;= wrap&nbsp; <code class="inline">nw</code>&nbsp;= nowrap&nbsp; <code class="inline">inh</code>&nbsp;= inherit&nbsp; <code class="inline">u</code>&nbsp;= unset
+        </div>
+      </div>
+    </div>
+    <div class="callout tip"><span class="callout-icon">✦</span><div>Responsive suffix <code class="inline">-l</code> (e.g., <code class="inline">s-d-n-l</code>) applies the rule only at <strong>≤1024px</strong>. Breakpoint-aware grid sizing uses the <code class="inline">ag-c</code> attribute with fraction notation.</div></div>
+  </section>
+
+  <!-- COLORS -->
+  <section class="doc-section" id="colors">
+    <p class="section-eyebrow">Design Tokens</p>
+    <h2 class="section-title">Color Palette</h2>
+    <p class="section-desc">11 semantic color tokens driven by CSS custom properties. Swap your brand identity by overriding these in your own <code class="inline">:root</code> block.</p>
+    <div class="color-grid" id="colorGrid"></div>
+    <div class="code-block">
+      <div class="code-block-header"><span class="code-lang">CSS</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code>/* Color utility classes */
+.c-1 through .c-11  → color: var(--c-N)
+
+/* Background utilities */
+.s-b-g  → background: var(--c-3)   /* light gray */
+.s-b-lg → background: var(--c-7)   /* lighter gray */
+.s-b-w  → background: #fff
+.s-b-b  → background: #000
+.s-b-t  → background: transparent</code></pre>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section class="doc-section" id="typography">
+    <p class="section-eyebrow">Design Tokens</p>
+    <h2 class="section-title">Typography Scale</h2>
+    <p class="section-desc">12 font-size tokens from <code class="inline">--f-s-0</code> (10px) to <code class="inline">--f-s-11</code> (80px). Apply with <code class="inline">.f-s-{n}</code> utility classes.</p>
+    <div class="type-scale" id="typeScale"></div>
+    <div class="subsection-title">Font Family Classes</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Variable</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.p-f</code></td><td><code class="inline">--p-f</code></td><td>Primary font — used on headings h1–h6</td></tr>
+        <tr><td><code class="inline">.s-f</code></td><td><code class="inline">--s-f</code></td><td>Secondary font — used on body text, paragraphs, anchors</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Heading Hierarchy</div>
+    <div class="code-block">
+      <div class="code-block-header"><span class="code-lang">CSS</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code>h1 → font-size: var(--general-font-size)       /* default 2rem */
+h2 → font-size: calc(var(--general-font-size) * 0.9)
+h3 → font-size: calc(var(--general-font-size) * 0.8)
+h4 → font-size: calc(var(--general-font-size) * 0.7)
+h5 → font-size: calc(var(--general-font-size) * 0.6)
+h6 → font-size: calc(var(--general-font-size) * 0.5)
+
+/* Semantic text classes */
+.t-h-1 → font-family: var(--p-f); font-size: var(--f-s-7)  /* 32px hero */
+.t-h-2 → font-family: var(--p-f); font-size: var(--f-s-5)  /* 20px sub  */
+.t-h-3 → font-family: var(--s-f); font-size: var(--f-s-3)  /* 16px label*/</code></pre>
+    </div>
+  </section>
+
+  <!-- FONT WEIGHTS -->
+  <section class="doc-section" id="font-weights">
+    <p class="section-eyebrow">Design Tokens</p>
+    <h2 class="section-title">Font Weights</h2>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Variable</th><th>Weight</th><th>Preview</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.f-w-1</code></td><td><code class="inline">--f-w-1</code></td><td>100</td><td style="font-weight:100">Thin text preview</td></tr>
+        <tr><td><code class="inline">.f-w-2</code></td><td><code class="inline">--f-w-2</code></td><td>200</td><td style="font-weight:200">Extra-light text preview</td></tr>
+        <tr><td><code class="inline">.f-w-3</code></td><td><code class="inline">--f-w-3</code></td><td>300</td><td style="font-weight:300">Light text preview</td></tr>
+        <tr><td><code class="inline">.f-w-4</code></td><td><code class="inline">--f-w-4</code></td><td>400</td><td style="font-weight:400">Regular text preview</td></tr>
+        <tr><td><code class="inline">.f-w-5</code></td><td><code class="inline">--f-w-5</code></td><td>500</td><td style="font-weight:500">Medium text preview</td></tr>
+        <tr><td><code class="inline">.f-w-6</code></td><td><code class="inline">--f-w-6</code></td><td>600</td><td style="font-weight:600">Semibold text preview</td></tr>
+        <tr><td><code class="inline">.f-w-7</code></td><td><code class="inline">--f-w-7</code></td><td>700</td><td style="font-weight:700">Bold text preview</td></tr>
+        <tr><td><code class="inline">.f-w-b</code></td><td><code class="inline">--f-w-b</code></td><td>bold</td><td style="font-weight:bold">Bold (keyword) preview</td></tr>
+        <tr><td><code class="inline">.f-w-n</code></td><td><code class="inline">--f-w-n</code></td><td>normal</td><td style="font-weight:normal">Normal (keyword) preview</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- LINE HEIGHTS -->
+  <section class="doc-section" id="line-heights">
+    <p class="section-eyebrow">Design Tokens</p>
+    <h2 class="section-title">Line Heights</h2>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Variable</th><th>Value</th><th>Use Case</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.l-h-1</code></td><td><code class="inline">--l-h-1</code></td><td>1</td><td>Headlines, tight display text</td></tr>
+        <tr><td><code class="inline">.l-h-2</code></td><td><code class="inline">--l-h-2</code></td><td>1.25</td><td>Subheadings, cards</td></tr>
+        <tr><td><code class="inline">.l-h-3</code></td><td><code class="inline">--l-h-3</code></td><td>1.5</td><td>Body text, paragraphs (default)</td></tr>
+        <tr><td><code class="inline">.l-h-4</code></td><td><code class="inline">--l-h-4</code></td><td>2</td><td>Large blocks, forms, legibility</td></tr>
+        <tr><td><code class="inline">.l-h-n</code></td><td>—</td><td>normal</td><td>Browser default</td></tr>
+        <tr><td><code class="inline">.l-h-inh</code></td><td>—</td><td>inherit</td><td>Inherit from parent</td></tr>
+        <tr><td><code class="inline">.l-h-u</code></td><td>—</td><td>unset</td><td>Unset line-height</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- GRID -->
+  <section class="doc-section" id="grid">
+    <p class="section-eyebrow">Layout</p>
+    <h2 class="section-title">Grid System</h2>
+    <p class="section-desc">AG uses an attribute-based grid. Rows use <code class="inline">[ag-r]</code> and columns use <code class="inline">[ag-c]</code> with fractional notation. The grid adapts its column count automatically based on the breakpoint.</p>
+    <div class="callout info"><span class="callout-icon">ℹ</span><div>Column sizes are expressed as fractions like <code class="inline">ag-c="1/4"</code>. Chain multiple breakpoint values: <code class="inline">ag-c="1/4 2/8 3/12"</code> means 1/4 at small, 2/8 at medium, 3/12 at large.</div></div>
+
+    <div class="subsection-title">How ag-r and ag-c Work</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Attribute</th><th>Role</th><th>CSS Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">ag-r</code></td><td>Row container</td><td><code class="inline">display: flex; flex-flow: row wrap; align-items: flex-start;</code></td></tr>
+        <tr><td><code class="inline">ag-c</code></td><td>Column child</td><td>Auto-grows if empty, fixed width if fraction specified</td></tr>
+        <tr><td><code class="inline">ag-c=""</code></td><td>Fluid column</td><td><code class="inline">flex-grow: 1; flex-basis: 0;</code> — fills available space</td></tr>
+        <tr><td><code class="inline">ag-c="N/T"</code></td><td>Fixed fraction</td><td><code class="inline">width: calc(100% * N / T - spacing)</code></td></tr>
+        <tr><td><code class="inline">ag-r ag-c</code></td><td>Nested row+col</td><td>An element can be both a row and a column simultaneously</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="subsection-title">Live Demo — Even Fluid Columns</div>
+    <div ag-r style="margin-bottom:16px;">
+      <div ag-c class="grid-demo-col">ag-c (fluid)</div>
+      <div ag-c class="grid-demo-col">ag-c (fluid)</div>
+      <div ag-c class="grid-demo-col">ag-c (fluid)</div>
+    </div>
+
+    <div class="subsection-title">Half / Third Spans (12-col)</div>
+    <div ag-r style="margin-bottom:8px;">
+      <div ag-c="6/12" class="grid-demo-col">6/12 — half</div>
+      <div ag-c="6/12" class="grid-demo-col">6/12 — half</div>
+    </div>
+    <div ag-r style="margin-bottom:8px;">
+      <div ag-c="4/12" class="grid-demo-col">4/12 — third</div>
+      <div ag-c="4/12" class="grid-demo-col">4/12 — third</div>
+      <div ag-c="4/12" class="grid-demo-col">4/12 — third</div>
+    </div>
+    <div ag-r style="margin-bottom:8px;">
+      <div ag-c="1/12" class="grid-demo-col">1/12</div>
+      <div ag-c="1/12" class="grid-demo-col">1/12</div>
+      <div ag-c="10/12" class="grid-demo-col">10/12 — wide content area</div>
+    </div>
+    <div ag-r style="margin-bottom:8px;">
+      <div ag-c="3/12" class="grid-demo-col">3/12 — sidebar</div>
+      <div ag-c="9/12" class="grid-demo-col">9/12 — main</div>
+    </div>
+
+    <div class="subsection-title" style="margin-top:20px;">8-col Examples (≥768px)</div>
+    <div ag-r style="margin-bottom:8px;">
+      <div ag-c="4/8" class="grid-demo-col">4/8 — half</div>
+      <div ag-c="4/8" class="grid-demo-col">4/8 — half</div>
+    </div>
+    <div ag-r style="margin-bottom:8px;">
+      <div ag-c="2/8" class="grid-demo-col">2/8</div>
+      <div ag-c="6/8" class="grid-demo-col">6/8</div>
+    </div>
+    <div ag-r style="margin-bottom:8px;">
+      <div ag-c="1/8" class="grid-demo-col">1/8</div>
+      <div ag-c="1/8" class="grid-demo-col">1/8</div>
+      <div ag-c="1/8" class="grid-demo-col">1/8</div>
+      <div ag-c="5/8" class="grid-demo-col">5/8</div>
+    </div>
+
+    <div class="subsection-title" style="margin-top:20px;">Responsive Chained Values</div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">HTML</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>&lt;!-- 
+  mobile (&lt;576px)  → 3-col grid → full width (3/3)
+  small  (≥576px)  → 4-col grid → half (2/4)
+  tablet (≥768px)  → 8-col grid → half (4/8)
+  desktop(≥1025px) → 12-col grid → half (6/12)
+--&gt;
+&lt;div ag-r&gt;
+  &lt;div ag-c="3/3 2/4 4/8 6/12"&gt;Responsive column&lt;/div&gt;
+  &lt;div ag-c="3/3 2/4 4/8 6/12"&gt;Responsive column&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 1/2 at desktop, full on mobile --&gt;
+&lt;div ag-c="3/3 4/4 4/8 6/12"&gt;...&lt;/div&gt;
+
+&lt;!-- 1/3 at desktop --&gt;
+&lt;div ag-c="3/3 4/4 3/8 4/12"&gt;...&lt;/div&gt;
+
+&lt;!-- 1/12 narrow col at desktop only --&gt;
+&lt;div ag-c="3/3 4/4 1/8 1/12"&gt;Narrow sidebar&lt;/div&gt;
+
+&lt;!-- Hide below 576px --&gt;
+&lt;div ag-c="0/3 4/4 2/8"&gt;Hidden on mobile, 2/8 from tablet&lt;/div&gt;
+
+&lt;!-- Offset: 12-3 = 9 effective columns --&gt;
+&lt;div ag-c="6/12 12-3"&gt;Offset column (6 of 9 effective cols)&lt;/div&gt;</code></pre></div>
+
+    <div class="subsection-title">Nested Grids (ag-r + ag-c on same element)</div>
+    <div ag-r style="margin-bottom:8px;">
+      <div ag-c="4/12" class="grid-demo-col" style="padding:0;">
+        <!-- this column is ALSO a row: ag-r ag-c on same element -->
+        <div ag-r ag-c="4/12" style="display:flex;flex-direction:column;width:100%;">
+          <div style="background:rgba(200,57,43,.2);padding:8px;font-family:monospace;font-size:0.65rem;text-align:center;border-bottom:1px solid rgba(200,57,43,.3);">Nested row (ag-r ag-c)</div>
+          <div ag-r style="flex:1;">
+            <div ag-c class="grid-demo-col" style="font-size:0.6rem;margin:4px;">inner A</div>
+            <div ag-c class="grid-demo-col" style="font-size:0.6rem;margin:4px;">inner B</div>
+          </div>
+        </div>
+      </div>
+      <div ag-c="8/12" class="grid-demo-col">8/12 — sibling</div>
+    </div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">HTML</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>&lt;!-- Nested grid: a column that is also a row --&gt;
+&lt;div ag-r&gt;
+  &lt;div ag-r ag-c="4/12"&gt;
+    &lt;!-- This element is BOTH a column (4/12 wide) and a row (flex container) --&gt;
+    &lt;div ag-c&gt;Nested col A&lt;/div&gt;
+    &lt;div ag-c&gt;Nested col B&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div ag-c="8/12"&gt;Sibling 8/12&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+  </section>
+
+  <!-- BREAKPOINTS -->
+  <section class="doc-section" id="breakpoints">
+    <p class="section-eyebrow">Layout</p>
+    <h2 class="section-title">Breakpoints</h2>
+    <p class="section-desc">AG defines 5 breakpoint tiers, each increasing the grid column count. Column fractions are resolved against the <em>current</em> grid size.</p>
+    <div class="bp-grid">
+      <div class="bp-card"><div class="bp-size">&lt;576</div><div class="bp-label">Mobile — <code class="inline">max-width: 575px</code></div><div class="bp-cols">3 columns · fractions /3</div></div>
+      <div class="bp-card"><div class="bp-size">576</div><div class="bp-label">Small — <code class="inline">min-width: 576px</code></div><div class="bp-cols">4 columns · fractions /4</div></div>
+      <div class="bp-card"><div class="bp-size">768</div><div class="bp-label">Tablet — <code class="inline">min-width: 768px</code></div><div class="bp-cols">8 columns · fractions /8</div></div>
+      <div class="bp-card"><div class="bp-size">1025</div><div class="bp-label">Desktop — <code class="inline">min-width: 1025px</code></div><div class="bp-cols">12 columns · fractions /12</div></div>
+      <div class="bp-card"><div class="bp-size">1440</div><div class="bp-label">Wide — <code class="inline">min-width: 1440px</code></div><div class="bp-cols">16 columns · fractions /16</div></div>
+    </div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Breakpoint</th><th>Width</th><th>Grid Size</th><th>Max Fraction</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>xs (mobile)</td><td>&lt;576px</td><td>3 cols</td><td><code class="inline">3/3</code></td><td><code class="inline">ag-c="2/3"</code> → 66.6%</td></tr>
+        <tr><td>sm</td><td>≥576px</td><td>4 cols</td><td><code class="inline">4/4</code></td><td><code class="inline">ag-c="1/4"</code> → 25%</td></tr>
+        <tr><td>md</td><td>≥768px</td><td>8 cols</td><td><code class="inline">8/8</code></td><td><code class="inline">ag-c="3/8"</code> → 37.5%</td></tr>
+        <tr><td>lg</td><td>≥1025px</td><td>12 cols</td><td><code class="inline">12/12</code></td><td><code class="inline">ag-c="5/12"</code> → 41.6%</td></tr>
+        <tr><td>xl</td><td>≥1440px</td><td>16 cols</td><td><code class="inline">16/16</code></td><td><code class="inline">ag-c="4/16"</code> → 25%</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- GRID PADDING -->
+  <section class="doc-section" id="grid-padding">
+    <p class="section-eyebrow">Layout</p>
+    <h2 class="section-title">Grid Padding Classes</h2>
+    <p class="section-desc">Proportional padding helpers that scale relative to the grid's column count using <code class="inline">var(--gs)</code>.</p>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Formula</th><th>Result (12-col grid)</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.p-g-1</code></td><td><code class="inline">100% * 0.05 / --gs</code></td><td>~0.42% of container width</td></tr>
+        <tr><td><code class="inline">.p-g-2</code></td><td><code class="inline">100% * 0.1 / --gs</code></td><td>~0.83% of container width</td></tr>
+        <tr><td><code class="inline">.p-g-3</code></td><td><code class="inline">100% * 0.2 / --gs</code></td><td>~1.67% of container width</td></tr>
+        <tr><td><code class="inline">.p-g-4</code></td><td><code class="inline">100% * 0.3 / --gs</code></td><td>~2.5% of container width</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- BUTTONS -->
+  <section class="doc-section" id="buttons">
+    <p class="section-eyebrow">Components</p>
+    <h2 class="section-title">Buttons</h2>
+    <p class="section-desc">Five anchor-button variants (<code class="inline">.a-b-1</code> through <code class="inline">.a-b-5</code>) plus a floating action button (<code class="inline">.f-b-1</code>). Apply to <code class="inline">&lt;a&gt;</code> or <code class="inline">&lt;button&gt;</code> elements.</p>
+    <div class="button-row">
+      <a href="#" class="a-b-1">a-b-1 Solid</a>
+      <a href="#" class="a-b-2">a-b-2 Outlined</a>
+      <a href="#" class="a-b-3">a-b-3 Ghost</a>
+      <a href="#" class="a-b-4" style="color:var(--doc-text);font-size:0.9rem;">a-b-4 Bare</a>
+      <a href="#" class="a-b-5">a-b-5 Compact</a>
+      <button class="f-b-1" style="font-size:1rem !important;">✦</button>
+    </div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Style</th><th>Height</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.a-b-1</code></td><td>Solid gradient (c-1 → red → c-1) on hover</td><td>40px</td><td>Primary CTA. Gradient animates on hover via <code class="inline">background-position</code>.</td></tr>
+        <tr><td><code class="inline">.a-b-2</code></td><td>Outlined border (c-1), fill on hover</td><td>40px</td><td>Secondary action. Border uses <code class="inline">var(--c-1)</code>.</td></tr>
+        <tr><td><code class="inline">.a-b-3</code></td><td>White fill, ripple effect on click</td><td>auto</td><td>Tertiary / card action. Ripple is c-1 colored.</td></tr>
+        <tr><td><code class="inline">.a-b-4</code></td><td>Fully transparent, no border</td><td>auto</td><td>Bare link-style button. No visual chrome.</td></tr>
+        <tr><td><code class="inline">.a-b-5</code></td><td>Compact gradient, small padding</td><td>30px</td><td>Inline / tag-sized action.</td></tr>
+        <tr><td><code class="inline">.f-b-1</code></td><td>Circular black FAB, 32×32px</td><td>32px</td><td>Icon-only. Pair with <code class="inline">[data-agora-icon]</code>.</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Modifier Classes</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.r-b</code></td><td>Adds lift shadow + translateY on hover/focus (raise button)</td></tr>
+        <tr><td><code class="inline">.a-b-w-l</code></td><td>Loading spinner state — adds animated spinner after button</td></tr>
+        <tr><td><code class="inline">.b-btn.a-b-1</code></td><td>Block button override — auto height, normal line-height, padded</td></tr>
+        <tr><td><code class="inline">.l-b</code></td><td>Logo button — 40px tall, auto width</td></tr>
+        <tr><td><code class="inline">.vp-b</code></td><td>Video play button overlay — adds centered play icon via ::before</td></tr>
+      </tbody></table>
+    </div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">HTML</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>&lt;a href="/contact" class="a-b-1"&gt;Primary Action&lt;/a&gt;
+&lt;a href="/learn"   class="a-b-2"&gt;Secondary Action&lt;/a&gt;
+&lt;a href="/more"    class="a-b-3"&gt;Tertiary Action&lt;/a&gt;
+&lt;button            class="a-b-4"&gt;Bare Button&lt;/button&gt;
+&lt;a href="/tag"     class="a-b-5"&gt;Compact&lt;/a&gt;
+&lt;button            class="f-b-1"&gt;&lt;!-- icon --&gt;&lt;/button&gt;
+&lt;!-- Loading state --&gt;
+&lt;button class="a-b-1 a-b-w-l"&gt;Saving...&lt;/button&gt;
+&lt;!-- Lift effect --&gt;
+&lt;a href="#" class="a-b-1 r-b"&gt;Raised Button&lt;/a&gt;</code></pre></div>
+  </section>
+
+  <!-- CARDS -->
+  <section class="doc-section" id="cards">
+    <p class="section-eyebrow">Components</p>
+    <h2 class="section-title">Cards</h2>
+    <p class="section-desc">The <code class="inline">.card</code> component is a flex container with shadow and transition. Several sub-classes control its internal regions.</p>
+    <div style="max-width:320px;margin-bottom:24px;">
+      <div class="card">
+        <div class="ca-i" style="background:var(--doc-surface-2);height:120px;border-radius:4px;margin-bottom:12px;"></div>
+        <span class="ca-p">Card Price</span>
+        <div style="font-size:0.85rem;color:var(--doc-text-muted);margin-top:8px;width:100%;">Card subtitle or description text goes here.</div>
+        <div style="display:flex;gap:8px;margin-top:12px;"><a href="#" class="ca-a-b-1">Action</a></div>
+      </div>
+    </div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Role</th><th>Key Property</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.card</code></td><td>Root container</td><td><code class="inline">display:flex; flex-flow:wrap; justify-content:space-between;</code></td></tr>
+        <tr><td><code class="inline">.ca-i</code></td><td>Card image wrapper</td><td><code class="inline">width:100%; margin/padding:0;</code></td></tr>
+        <tr><td><code class="inline">.ca-c</code></td><td>Card content block</td><td><code class="inline">margin-bottom:1.6rem;</code></td></tr>
+        <tr><td><code class="inline">.ca-p</code></td><td>Price / prominent label</td><td><code class="inline">display:inline-block; font-size:--f-s-4; font-weight:--f-w-6;</code></td></tr>
+        <tr><td><code class="inline">.ca-m</code></td><td>Card menu (top-right)</td><td><code class="inline">position:absolute; right:25px; top:25px;</code></td></tr>
+        <tr><td><code class="inline">.ca-f-b-1</code></td><td>Card FAB (footer button)</td><td>46×46px square icon button, uses <code class="inline">--c-3</code> bg</td></tr>
+        <tr><td><code class="inline">.ca-a-b-1</code></td><td>Card action button</td><td>Outlined, border-radius 6px, hover fills to #444</td></tr>
+        <tr><td><code class="inline">.ca-ol</code></td><td>Overlay effect</td><td>Adds dark gradient + border overlay via ::before and ::after</td></tr>
+        <tr><td><code class="inline">.ca-sl</code></td><td>Scale-on-hover image</td><td>Child img scales 1.1× on hover with cubic-bezier transition</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- FLEX UTILITIES -->
+  <section class="doc-section" id="flex">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Flex Utilities</h2>
+    <p class="section-desc">An exhaustive set of flexbox utility classes following the <code class="inline">s-f-{property}-{value}</code> convention. Pair with <code class="inline">.s-d-f</code> (display: flex) or <code class="inline">.s-d-if</code> (display: inline-flex).</p>
+    <input type="text" class="table-search" id="flexSearch" placeholder="Filter flex utilities… (e.g. 'center', 'wrap', 'column')"/>
+    <div class="doc-table-wrap">
+      <table class="doc-table" id="flexTable">
+        <thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+        <tbody id="flexBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SPACING / PADDING -->
+  <section class="doc-section" id="spacing">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Padding</h2>
+    <p class="section-desc">Pixel-based padding helpers from 0 to 200px. Directional variants cover all, top, bottom, left, right, top+bottom, and left+right.</p>
+    <input type="text" class="table-search" id="paddingSearch" placeholder="Filter padding classes… (e.g. 'p-t-16', 'lr', '50')"/>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody id="paddingBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MARGIN -->
+  <section class="doc-section" id="margin">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Margin</h2>
+    <p class="section-desc">Margin utilities mirror the padding system. Values: 0, 4, 8, 12, 16, 50px with full directional variants.</p>
+    <input type="text" class="table-search" id="marginSearch" placeholder="Filter margin classes… (e.g. 'm-b-8', 'lr', 'auto')"/>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody id="marginBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TEXT ALIGN -->
+  <section class="doc-section" id="text-align">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Text Alignment</h2>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-ta-l</code></td><td>text-align</td><td>left</td></tr>
+        <tr><td><code class="inline">.s-ta-r</code></td><td>text-align</td><td>right</td></tr>
+        <tr><td><code class="inline">.s-ta-c</code></td><td>text-align</td><td>center</td></tr>
+        <tr><td><code class="inline">.s-ta-j</code></td><td>text-align</td><td>justify</td></tr>
+        <tr><td><code class="inline">.s-ta-i</code></td><td>text-align</td><td>inherit</td></tr>
+        <tr><td><code class="inline">.s-ta-l-l</code></td><td>text-align</td><td>left (≤1024px only)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Text Transform</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-tt-u</code></td><td>text-transform</td><td>uppercase</td></tr>
+        <tr><td><code class="inline">.s-tt-c</code></td><td>text-transform</td><td>capitalize</td></tr>
+        <tr><td><code class="inline">.s-tt-l</code></td><td>text-transform</td><td>lowercase</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Text Decoration</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-td-u</code></td><td>text-decoration</td><td>underline</td></tr>
+        <tr><td><code class="inline">.s-td-n</code></td><td>text-decoration</td><td>none</td></tr>
+        <tr><td><code class="inline">.s-to-e</code></td><td>text-overflow</td><td>ellipsis</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- DISPLAY -->
+  <section class="doc-section" id="display">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Display</h2>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Value</th><th>Breakpoint</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-d-f</code></td><td>flex</td><td>All</td></tr>
+        <tr><td><code class="inline">.s-d-if</code></td><td>inline-flex</td><td>All</td></tr>
+        <tr><td><code class="inline">.s-d-b</code></td><td>block</td><td>All</td></tr>
+        <tr><td><code class="inline">.s-d-ib</code></td><td>inline-block</td><td>All</td></tr>
+        <tr><td><code class="inline">.s-d-i</code></td><td>inline</td><td>All</td></tr>
+        <tr><td><code class="inline">.s-d-n</code></td><td>none (!important)</td><td>All</td></tr>
+        <tr><td><code class="inline">.s-d-t</code></td><td>table</td><td>All</td></tr>
+        <tr><td><code class="inline">.s-d-c</code></td><td>contents</td><td>All</td></tr>
+        <tr><td><code class="inline">.s-d-b-l</code></td><td>block (!important)</td><td>≤1024px only</td></tr>
+        <tr><td><code class="inline">.s-d-ib-l</code></td><td>inline-block (!important)</td><td>≤1024px only</td></tr>
+        <tr><td><code class="inline">.s-d-n-l</code></td><td>none (!important)</td><td>≤1024px only</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- SIZING -->
+  <section class="doc-section" id="sizing">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Sizing</h2>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-w-100</code></td><td>width</td><td>100% (!important)</td></tr>
+        <tr><td><code class="inline">.s-h-100</code></td><td>height</td><td>100% (!important)</td></tr>
+        <tr><td><code class="inline">.s-w-50</code></td><td>width</td><td>50%</td></tr>
+        <tr><td><code class="inline">.s-w-a</code></td><td>width</td><td>auto (!important)</td></tr>
+        <tr><td><code class="inline">.s-h-a</code></td><td>height</td><td>auto (!important)</td></tr>
+        <tr><td><code class="inline">.s-w-fc</code></td><td>width</td><td>fit-content</td></tr>
+        <tr><td><code class="inline">.s-mw-100</code></td><td>max-width</td><td>100%</td></tr>
+        <tr><td><code class="inline">.s-mw-u</code></td><td>max-width</td><td>unset</td></tr>
+        <tr><td><code class="inline">.im-w-100</code></td><td>width</td><td>100px</td></tr>
+        <tr><td><code class="inline">.im-bn</code></td><td>height</td><td>800px (640px on ≤1024px)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Aspect Ratios</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Ratio</th><th>Use Case</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.a-r-1</code></td><td>13:16</td><td>Portrait card</td></tr>
+        <tr><td><code class="inline">.a-r-2</code></td><td>43:15</td><td>Wide banner</td></tr>
+        <tr><td><code class="inline">.a-r-3</code></td><td>53:29</td><td>Landscape hero</td></tr>
+        <tr><td><code class="inline">.a-r-5</code></td><td>27:14</td><td>Wide-screen</td></tr>
+        <tr><td><code class="inline">.a-r-6</code></td><td>1:1</td><td>Square</td></tr>
+        <tr><td><code class="inline">.a-r-7</code></td><td>16:9</td><td>Video / widescreen</td></tr>
+        <tr><td><code class="inline">.a-r-8</code></td><td>19:8</td><td>Ultra-wide</td></tr>
+        <tr><td><code class="inline">.a-r-11</code></td><td>105:59</td><td>Near 16:9</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- POSITION -->
+  <section class="doc-section" id="position">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Position</h2>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-p-r</code></td><td>position</td><td>relative</td></tr>
+        <tr><td><code class="inline">.s-p-a</code></td><td>position</td><td>absolute</td></tr>
+        <tr><td><code class="inline">.s-p-f</code></td><td>position</td><td>fixed</td></tr>
+        <tr><td><code class="inline">.s-t-0</code></td><td>top</td><td>0</td></tr>
+        <tr><td><code class="inline">.s-r-0</code></td><td>right</td><td>0</td></tr>
+        <tr><td><code class="inline">.s-b-0</code></td><td>bottom</td><td>0</td></tr>
+        <tr><td><code class="inline">.s-l-0</code></td><td>left</td><td>0</td></tr>
+        <tr><td><code class="inline">.s-ml-a</code></td><td>margin-left</td><td>auto</td></tr>
+        <tr><td><code class="inline">.s-mr-a</code></td><td>margin-right</td><td>auto</td></tr>
+        <tr><td><code class="inline">.s-m-a</code></td><td>margin</td><td>auto (!important)</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- MISC -->
+  <section class="doc-section" id="misc">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Miscellaneous Utilities</h2>
+    <div class="subsection-title">Overflow &amp; Visibility</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-o-h</code></td><td>overflow</td><td>hidden</td></tr>
+        <tr><td><code class="inline">.s-o-a</code></td><td>overflow</td><td>auto</td></tr>
+        <tr><td><code class="inline">.s-o-i</code></td><td>overflow</td><td>inherit</td></tr>
+        <tr><td><code class="inline">.s-v-h</code></td><td>visibility</td><td>hidden</td></tr>
+        <tr><td><code class="inline">.s-v-v</code></td><td>visibility</td><td>visible (!important)</td></tr>
+        <tr><td><code class="inline">.s-op-1</code></td><td>opacity</td><td>1 (!important)</td></tr>
+        <tr><td><code class="inline">.visuallyhidden</code></td><td>multiple</td><td>Screen-reader only (clip technique)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Object Fit &amp; Position</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-of-cv</code></td><td>object-fit</td><td>cover</td></tr>
+        <tr><td><code class="inline">.s-of-cn</code></td><td>object-fit</td><td>contain</td></tr>
+        <tr><td><code class="inline">.s-of-f</code></td><td>object-fit</td><td>fill</td></tr>
+        <tr><td><code class="inline">.s-op-c</code></td><td>object-position</td><td>center</td></tr>
+        <tr><td><code class="inline">.s-op-t</code></td><td>object-position</td><td>top</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Float, Cursor, White-Space</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-f-l</code></td><td>float</td><td>left</td></tr>
+        <tr><td><code class="inline">.s-f-r</code></td><td>float</td><td>right</td></tr>
+        <tr><td><code class="inline">.s-f-n</code></td><td>float</td><td>none</td></tr>
+        <tr><td><code class="inline">.s-c-p</code></td><td>cursor</td><td>pointer</td></tr>
+        <tr><td><code class="inline">.s-ws-nw</code></td><td>white-space</td><td>nowrap</td></tr>
+        <tr><td><code class="inline">.s-ws-n</code></td><td>white-space</td><td>normal</td></tr>
+        <tr><td><code class="inline">.s-a-n</code></td><td>animation</td><td>none</td></tr>
+        <tr><td><code class="inline">.s-pe-n</code></td><td>pointer-events</td><td>none</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Border &amp; Border Radius</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-b-n</code></td><td>border</td><td>none (!important)</td></tr>
+        <tr><td><code class="inline">.s-br-2</code></td><td>border-radius</td><td>2px</td></tr>
+        <tr><td><code class="inline">.s-br-50</code></td><td>border-radius</td><td>50% (circle)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Order (Flexbox / Grid)</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-o-0</code> – <code class="inline">.s-o-5</code></td><td>order</td><td>0–5</td></tr>
+        <tr><td><code class="inline">.s-o-inh</code></td><td>order</td><td>inherit</td></tr>
+        <tr><td><code class="inline">.s-o-u</code></td><td>order</td><td>unset</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Column Count (Multi-col Layout)</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-cc-1</code> – <code class="inline">.s-cc-5</code></td><td>column-count</td><td>1–5</td></tr>
+        <tr><td><code class="inline">.s-bi-ac</code></td><td>break-inside</td><td>avoid-column</td></tr>
+        <tr><td><code class="inline">.s-bi-a</code></td><td>break-inside</td><td>auto</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Vertical Align</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-va-m</code></td><td>vertical-align</td><td>middle</td></tr>
+        <tr><td><code class="inline">.s-va-s</code></td><td>vertical-align</td><td>sub</td></tr>
+        <tr><td><code class="inline">.s-va-t</code></td><td>vertical-align</td><td>top</td></tr>
+        <tr><td><code class="inline">.s-va-b</code></td><td>vertical-align</td><td>bottom</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Word Break</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-wb-ba</code></td><td>word-break</td><td>break-all</td></tr>
+        <tr><td><code class="inline">.s-wb-bw</code></td><td>word-break</td><td>break-word</td></tr>
+        <tr><td><code class="inline">.s-wb-ini</code></td><td>word-break</td><td>normal</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Background Utilities</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-b-w</code></td><td>background: #fff</td></tr>
+        <tr><td><code class="inline">.s-b-b</code></td><td>background: #000</td></tr>
+        <tr><td><code class="inline">.s-b-g</code></td><td>background: var(--c-3)</td></tr>
+        <tr><td><code class="inline">.s-b-lg</code></td><td>background: var(--c-7)</td></tr>
+        <tr><td><code class="inline">.s-b-t</code></td><td>background: transparent</td></tr>
+        <tr><td><code class="inline">.s-c-w</code></td><td>color: #fff</td></tr>
+        <tr><td><code class="inline">.s-c-cc</code></td><td>color: currentColor</td></tr>
+        <tr><td><code class="inline">.s-b-cc</code></td><td>background: currentColor</td></tr>
+        <tr><td><code class="inline">.s-bi-lg</code></td><td>background-image: linear-gradient(0deg, nearly-transparent, transparent)</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- COLOR UTILITIES -->
+  <section class="doc-section" id="color-utils">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Color Utilities</h2>
+    <p class="section-desc">Token-based text color shortcuts (<code class="inline">.c-1</code> → <code class="inline">.c-11</code>) that map directly to CSS custom properties. These are the same tokens defined in your <code class="inline">:root</code>.</p>
+    <div class="color-grid" id="colorGridUtils" style="margin-bottom:24px;"></div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Text Color Class</th><th>BG Class</th><th>Variable</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.c-1</code></td><td><code class="inline">.s-b-g</code> (approx)</td><td><code class="inline">--c-1</code></td><td>Brand Primary</td></tr>
+        <tr><td><code class="inline">.c-2</code></td><td>—</td><td><code class="inline">--c-2</code></td><td>Brand Dark</td></tr>
+        <tr><td><code class="inline">.c-3</code></td><td><code class="inline">.s-b-g</code></td><td><code class="inline">--c-3</code></td><td>Surface Light</td></tr>
+        <tr><td><code class="inline">.c-4</code></td><td>—</td><td><code class="inline">--c-4</code></td><td>Surface</td></tr>
+        <tr><td><code class="inline">.c-5</code></td><td>—</td><td><code class="inline">--c-5</code></td><td>Border Light</td></tr>
+        <tr><td><code class="inline">.c-6</code></td><td>—</td><td><code class="inline">--c-6</code></td><td>Muted</td></tr>
+        <tr><td><code class="inline">.c-7</code></td><td><code class="inline">.s-b-lg</code></td><td><code class="inline">--c-7</code></td><td>Surface Hover</td></tr>
+        <tr><td><code class="inline">.c-8</code></td><td>—</td><td><code class="inline">--c-8</code></td><td>Text Muted</td></tr>
+        <tr><td><code class="inline">.c-9</code></td><td>—</td><td><code class="inline">--c-9</code></td><td>Text Secondary</td></tr>
+        <tr><td><code class="inline">.c-10</code></td><td>—</td><td><code class="inline">--c-10</code></td><td>Text Primary</td></tr>
+        <tr><td><code class="inline">.c-11</code></td><td><code class="inline">.s-b-b</code></td><td><code class="inline">--c-11</code></td><td>Absolute Dark</td></tr>
+        <tr><td><code class="inline">.s-c-w</code></td><td><code class="inline">.s-b-w</code></td><td>—</td><td>White</td></tr>
+        <tr><td><code class="inline">.s-c-cc</code></td><td><code class="inline">.s-b-cc</code></td><td>—</td><td>currentColor</td></tr>
+        <tr><td>—</td><td><code class="inline">.s-b-t</code></td><td>—</td><td>Transparent bg</td></tr>
+        <tr><td>—</td><td><code class="inline">.s-bi-lg</code></td><td>—</td><td>Subtle gradient overlay (bg-image)</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- IMAGE UTILITIES -->
+  <section class="doc-section" id="images">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Image Utilities</h2>
+    <p class="section-desc">AG provides lazy-loading hooks, sizing helpers, and card image overlay effects for images.</p>
+    <div class="subsection-title">Lazy Loading — <code class="inline">ag-lazy</code></div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class / Selector</th><th>Behaviour</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">img.ag-lazy</code></td><td>Shows an animated red spinner placeholder while the image hasn't loaded yet</td></tr>
+        <tr><td><code class="inline">img.ag-lazy.ag-lazy-s</code></td><td>Image loaded — fades in via <code class="inline">0.1s cubic-bezier</code>. Add this class via JS on the image's <code class="inline">load</code> event</td></tr>
+        <tr><td><code class="inline">img:not([src]), img[src=""], img[src*=fake]</code></td><td>Auto-hidden — prevents broken image icons from showing</td></tr>
+        <tr><td><code class="inline">.ag-lazy:not(.ag-lazy-s) + .s-p-a</code></td><td>Sibling element is also hidden while image is loading (opacity: 0)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="callout tip"><span class="callout-icon">✦</span><div>Use an <code class="inline">IntersectionObserver</code> to set <code class="inline">img.src</code> when in view, then add <code class="inline">.ag-lazy-s</code> on the <code class="inline">load</code> event. Start with <code class="inline">src=""</code> so the broken-image auto-hide kicks in immediately.</div></div>
+    <div class="subsection-title">Card Image Overlays</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.ca-ol</code></td><td><strong>::after</strong> — dark bottom-to-top gradient (opacity .8) over the image. <strong>::before</strong> — inset white-border frame at 10px inside edges. Both are <code class="inline">pointer-events:none</code></td></tr>
+        <tr><td><code class="inline">.ca-sl</code></td><td>Zoom-on-hover — child <code class="inline">&lt;img&gt;</code> scales to 1.1× with <code class="inline">translateZ(0)</code> GPU compositing and <code class="inline">0.4s cubic-bezier</code> easing</td></tr>
+        <tr><td><code class="inline">.ca-m</code></td><td>Absolute-positioned marker badge at top-right of the card (right: 25px, top: 25px)</td></tr>
+        <tr><td><code class="inline">.ca-c</code></td><td>Card content region — <code class="inline">margin-bottom: 1.6rem</code></td></tr>
+        <tr><td><code class="inline">.im-w-100</code></td><td>width: 100px</td></tr>
+        <tr><td><code class="inline">.im-bn</code></td><td>height: 800px (banner height)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">HTML</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>&lt;!-- Lazy loaded image --&gt;
+&lt;img class="ag-lazy" src="" data-src="photo.jpg"
+     onload="this.classList.add('ag-lazy-s')" /&gt;
+
+&lt;!-- Card with gradient overlay + zoom on hover --&gt;
+&lt;div class="card"&gt;
+  &lt;div class="ca-i ca-sl ca-ol s-p-r s-o-h"&gt;
+    &lt;img src="photo.jpg" class="s-w-100 s-of-cv" /&gt;
+  &lt;/div&gt;
+  &lt;div class="ca-c"&gt;Card content here&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+  </section>
+
+  <!-- RESPONSIVE PADDING OVERRIDES -->
+  <section class="doc-section" id="responsive-padding">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Responsive Padding Overrides</h2>
+    <p class="section-desc">These classes reduce padding at specific breakpoints. Naming pattern: <code class="inline">.g-{desktop-px}-p{direction}-{mobile-px}</code>. They kick in at <code class="inline">max-width: 1024px</code>.</p>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Breakpoint</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.g-50-p-10</code></td><td>≤1024px</td><td>padding: 10px — all directions</td></tr>
+        <tr><td><code class="inline">.g-50-p-{t/b/l/r/tb/lr}-10</code></td><td>≤1024px</td><td>padding directional: 10px</td></tr>
+        <tr><td><code class="inline">.g-100-p-20</code></td><td>≤1024px</td><td>padding: 20px — all directions</td></tr>
+        <tr><td><code class="inline">.g-100-p-{t/b/l/r/tb/lr}-20</code></td><td>≤1024px</td><td>padding directional: 20px</td></tr>
+        <tr><td><code class="inline">.g-200-p-30</code></td><td>≤1024px</td><td>padding: 30px — all directions</td></tr>
+        <tr><td><code class="inline">.g-200-p-{t/b/l/r/tb/lr}-30</code></td><td>≤1024px</td><td>padding directional: 30px</td></tr>
+        <tr><td><code class="inline">.g-16-p-8</code></td><td>≤1024px</td><td>padding: 8px — all directions</td></tr>
+        <tr><td><code class="inline">.g-16-p-{t/b/l/r/tb/lr}-8</code></td><td>≤1024px</td><td>padding directional: 8px</td></tr>
+        <tr><td><code class="inline">.p-lr-10-xl</code></td><td>1025px–1439px only</td><td>padding-left + right: 10px</td></tr>
+      </tbody></table>
+    </div>
+    <div class="callout info"><span class="callout-icon">ℹ</span><div>Example: apply <code class="inline">.p-50 .g-50-p-lr-10</code> together — desktop gets 50px left/right padding, tablet/mobile gets 10px. The <code class="inline">g-50</code> prefix signals which base class it pairs with.</div></div>
+  </section>
+
+  <!-- WHAT'S MISSING — EXTENSION GUIDE -->
+  <section class="doc-section" id="whats-missing">
+    <p class="section-eyebrow">Extension Guide</p>
+    <h2 class="section-title">What's Missing — Custom CSS Guide</h2>
+    <p class="section-desc">AG covers the essentials, but several common CSS patterns are intentionally absent or thin. This section documents the gaps so developers can write targeted custom CSS to fill them — without duplicating or fighting the framework.</p>
+
+    <div class="callout warn"><span class="callout-icon">⚠</span><div>Always add custom classes in a separate file loaded <em>after</em> ag.css so your rules win without needing <code class="inline">!important</code>. Follow AG's naming prefix convention — e.g. use <code class="inline">.ag-x-*</code> for your extensions — to avoid collisions.</div></div>
+
+    <div class="subsection-title">1 — Gap / Gutter (Flexbox &amp; Grid)</div>
+    <div class="callout warn"><span class="callout-icon">⚠</span><div><strong>Missing entirely.</strong> AG has no <code class="inline">gap</code>, <code class="inline">row-gap</code>, or <code class="inline">column-gap</code> utility classes. The grid uses <code class="inline">var(--gcs)</code> padding on columns, not gap. You'll need to add your own.</div></div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">CSS — suggested additions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>/* Gap utilities — add to your custom.css */
+.ag-x-gap-4  { gap: 4px; }
+.ag-x-gap-8  { gap: 8px; }
+.ag-x-gap-12 { gap: 12px; }
+.ag-x-gap-16 { gap: 16px; }
+.ag-x-gap-20 { gap: 20px; }
+.ag-x-gap-24 { gap: 24px; }
+.ag-x-gap-32 { gap: 32px; }
+
+.ag-x-rg-8   { row-gap: 8px; }
+.ag-x-rg-16  { row-gap: 16px; }
+.ag-x-cg-8   { column-gap: 8px; }
+.ag-x-cg-16  { column-gap: 16px; }</code></pre></div>
+
+    <div class="subsection-title">2 — CSS Grid Layout (<code class="inline">display: grid</code>)</div>
+    <div class="callout warn"><span class="callout-icon">⚠</span><div><strong>Missing entirely.</strong> AG uses a flexbox-based grid (<code class="inline">ag-r</code> / <code class="inline">ag-c</code>). There are no <code class="inline">display:grid</code>, <code class="inline">grid-template-columns</code>, <code class="inline">grid-column</code>, or <code class="inline">grid-template-areas</code> utilities.</div></div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">CSS — suggested additions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>/* CSS Grid utilities */
+.ag-x-dg  { display: grid; }
+.ag-x-dig { display: inline-grid; }
+
+/* Common column templates */
+.ag-x-gc-2  { grid-template-columns: repeat(2, 1fr); }
+.ag-x-gc-3  { grid-template-columns: repeat(3, 1fr); }
+.ag-x-gc-4  { grid-template-columns: repeat(4, 1fr); }
+.ag-x-gc-auto { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+/* Span helpers */
+.ag-x-cs-2 { grid-column: span 2; }
+.ag-x-cs-3 { grid-column: span 3; }
+.ag-x-rs-2 { grid-row: span 2; }</code></pre></div>
+
+    <div class="subsection-title">3 — Z-Index Scale</div>
+    <div class="callout warn"><span class="callout-icon">⚠</span><div><strong>Missing.</strong> No <code class="inline">z-index</code> utility classes. Stacking context must be set inline or in custom CSS.</div></div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">CSS — suggested additions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>/* Z-index scale */
+.ag-x-z-0   { z-index: 0; }
+.ag-x-z-1   { z-index: 1; }
+.ag-x-z-10  { z-index: 10; }
+.ag-x-z-50  { z-index: 50; }
+.ag-x-z-100 { z-index: 100; }
+.ag-x-z-n1  { z-index: -1; }
+.ag-x-z-top { z-index: 9999; }</code></pre></div>
+
+    <div class="subsection-title">4 — Border Width &amp; Color</div>
+    <div class="callout warn"><span class="callout-icon">⚠</span><div><strong>Thin.</strong> AG only has <code class="inline">.s-b-n</code> (none), <code class="inline">.s-br-2</code> (radius 2px), and <code class="inline">.s-br-50</code> (circle). No border-width steps, border-color tokens, or per-side border utilities.</div></div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">CSS — suggested additions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>/* Border widths */
+.ag-x-bw-1 { border-width: 1px; border-style: solid; }
+.ag-x-bw-2 { border-width: 2px; border-style: solid; }
+.ag-x-bw-4 { border-width: 4px; border-style: solid; }
+
+/* Border color tokens */
+.ag-x-bc-1 { border-color: var(--c-1); }
+.ag-x-bc-5 { border-color: var(--c-5); }
+.ag-x-bc-10{ border-color: var(--c-10); }
+
+/* Border radius scale */
+.ag-x-br-4  { border-radius: 4px; }
+.ag-x-br-8  { border-radius: 8px; }
+.ag-x-br-12 { border-radius: 12px; }
+.ag-x-br-16 { border-radius: 16px; }
+.ag-x-br-24 { border-radius: 24px; }
+.ag-x-br-r  { border-radius: 999px; } /* pill */
+
+/* Per-side borders */
+.ag-x-bt { border-top: 1px solid var(--c-5); }
+.ag-x-bb { border-bottom: 1px solid var(--c-5); }
+.ag-x-bl { border-left: 1px solid var(--c-5); }
+.ag-x-br { border-right: 1px solid var(--c-5); }</code></pre></div>
+
+    <div class="subsection-title">5 — Opacity Scale</div>
+    <div class="callout warn"><span class="callout-icon">⚠</span><div><strong>Thin.</strong> Only <code class="inline">.s-op-1</code> (opacity: 1) exists. No partial opacity classes.</div></div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">CSS — suggested additions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>/* Opacity scale */
+.ag-x-op-0   { opacity: 0; }
+.ag-x-op-10  { opacity: 0.1; }
+.ag-x-op-25  { opacity: 0.25; }
+.ag-x-op-50  { opacity: 0.5; }
+.ag-x-op-75  { opacity: 0.75; }
+.ag-x-op-90  { opacity: 0.9; }
+.ag-x-op-100 { opacity: 1; }</code></pre></div>
+
+    <div class="subsection-title">6 — Box Shadow</div>
+    <div class="callout warn"><span class="callout-icon">⚠</span><div><strong>Missing.</strong> No shadow utility classes exist in AG. The <code class="inline">.card</code> component has a built-in shadow but it can't be applied to arbitrary elements.</div></div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">CSS — suggested additions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>/* Shadow scale */
+.ag-x-shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06); }
+.ag-x-shadow    { box-shadow: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.05); }
+.ag-x-shadow-lg { box-shadow: 0 8px 32px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06); }
+.ag-x-shadow-xl { box-shadow: 0 20px 60px rgba(0,0,0,.15); }
+.ag-x-shadow-n  { box-shadow: none !important; }</code></pre></div>
+
+    <div class="subsection-title">7 — Transition &amp; Animation Helpers</div>
+    <div class="callout warn"><span class="callout-icon">⚠</span><div><strong>Thin.</strong> AG has <code class="inline">.s-a-n</code> (animation: none) but no reusable transition utility classes or named duration/easing helpers.</div></div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">CSS — suggested additions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>/* Transition utilities */
+.ag-x-tr-all  { transition: all .2s cubic-bezier(.4,0,.2,1); }
+.ag-x-tr-col  { transition: color .2s, background-color .2s; }
+.ag-x-tr-op   { transition: opacity .2s ease; }
+.ag-x-tr-tf   { transition: transform .2s cubic-bezier(.4,0,.2,1); }
+.ag-x-tr-n    { transition: none !important; }
+
+/* Common transforms */
+.ag-x-scale-105:hover { transform: scale(1.05); }
+.ag-x-scale-95:active { transform: scale(0.95); }
+.ag-x-rotate-45  { transform: rotate(45deg); }
+.ag-x-rotate-180 { transform: rotate(180deg); }</code></pre></div>
+
+    <div class="subsection-title">8 — Min/Max Height &amp; Width</div>
+    <div class="callout warn"><span class="callout-icon">⚠</span><div><strong>Missing.</strong> AG has <code class="inline">s-w-100</code>, <code class="inline">s-h-100</code>, <code class="inline">s-mw-100</code> but nothing for <code class="inline">min-height</code>, <code class="inline">max-height</code>, or fixed pixel dimensions.</div></div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">CSS — suggested additions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>/* Min/Max height */
+.ag-x-mnh-0   { min-height: 0; }
+.ag-x-mnh-100 { min-height: 100vh; }
+.ag-x-mnh-50  { min-height: 50vh; }
+.ag-x-mxh-screen { max-height: 100vh; overflow: auto; }
+
+/* Fixed dimensions */
+.ag-x-sq-32  { width: 32px;  height: 32px; }
+.ag-x-sq-40  { width: 40px;  height: 40px; }
+.ag-x-sq-48  { width: 48px;  height: 48px; }
+.ag-x-sq-64  { width: 64px;  height: 64px; }
+.ag-x-sq-80  { width: 80px;  height: 80px; }
+.ag-x-sq-120 { width: 120px; height: 120px; }</code></pre></div>
+
+    <div class="subsection-title">9 — Sticky &amp; Position Stacking</div>
+    <div class="callout warn"><span class="callout-icon">⚠</span><div><strong>Missing.</strong> <code class="inline">position: sticky</code> is not covered. AG only has <code class="inline">relative</code>, <code class="inline">absolute</code>, <code class="inline">fixed</code>.</div></div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">CSS — suggested additions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>/* Sticky positioning */
+.ag-x-p-s       { position: sticky; }
+.ag-x-sticky-t0 { position: sticky; top: 0; z-index: 10; }
+
+/* Inset shorthand (all four edges = 0) */
+.ag-x-inset-0 { top: 0; right: 0; bottom: 0; left: 0; }</code></pre></div>
+
+    <div class="subsection-title">10 — Scroll Utilities</div>
+    <div class="callout warn"><span class="callout-icon">⚠</span><div><strong>Missing.</strong> No scroll-snap, scroll-behavior per-element, or overscroll utilities. The global <code class="inline">scroll-behavior: smooth</code> is set on <code class="inline">html</code> but cannot be overridden per-container.</div></div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">CSS — suggested additions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>/* Scroll snap */
+.ag-x-snap-x  { scroll-snap-type: x mandatory; overflow-x: auto; }
+.ag-x-snap-y  { scroll-snap-type: y mandatory; overflow-y: auto; }
+.ag-x-snap-c  { scroll-snap-align: center; }
+.ag-x-snap-s  { scroll-snap-align: start; }
+
+/* Scrollbar */
+.ag-x-scrollbar-none  { scrollbar-width: none; }
+.ag-x-scrollbar-none::-webkit-scrollbar { display: none; }
+.ag-x-scrollbar-thin  { scrollbar-width: thin; }</code></pre></div>
+
+    <div class="subsection-title">Summary Table</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Missing Feature</th><th>Status in AG</th><th>Suggested Prefix</th></tr></thead>
+      <tbody>
+        <tr><td>Gap / Gutter utilities</td><td><span class="tag" style="background:#c8392b;color:#fff;">Missing</span></td><td><code class="inline">.ag-x-gap-*</code></td></tr>
+        <tr><td>CSS Grid (<code class="inline">display:grid</code>)</td><td><span class="tag" style="background:#c8392b;color:#fff;">Missing</span></td><td><code class="inline">.ag-x-dg</code>, <code class="inline">.ag-x-gc-*</code></td></tr>
+        <tr><td>Z-index scale</td><td><span class="tag" style="background:#c8392b;color:#fff;">Missing</span></td><td><code class="inline">.ag-x-z-*</code></td></tr>
+        <tr><td>Border width / color / per-side</td><td><span class="tag" style="background:#e8a020;color:#1a1814;">Thin</span></td><td><code class="inline">.ag-x-bw-*</code>, <code class="inline">.ag-x-bc-*</code></td></tr>
+        <tr><td>Opacity scale</td><td><span class="tag" style="background:#e8a020;color:#1a1814;">Thin</span></td><td><code class="inline">.ag-x-op-*</code></td></tr>
+        <tr><td>Box shadow</td><td><span class="tag" style="background:#c8392b;color:#fff;">Missing</span></td><td><code class="inline">.ag-x-shadow-*</code></td></tr>
+        <tr><td>Transition / animation helpers</td><td><span class="tag" style="background:#e8a020;color:#1a1814;">Thin</span></td><td><code class="inline">.ag-x-tr-*</code></td></tr>
+        <tr><td>Min/Max height &amp; fixed dimensions</td><td><span class="tag" style="background:#c8392b;color:#fff;">Missing</span></td><td><code class="inline">.ag-x-mnh-*</code>, <code class="inline">.ag-x-sq-*</code></td></tr>
+        <tr><td>Sticky positioning</td><td><span class="tag" style="background:#c8392b;color:#fff;">Missing</span></td><td><code class="inline">.ag-x-p-s</code></td></tr>
+        <tr><td>Scroll snap / scrollbar</td><td><span class="tag" style="background:#c8392b;color:#fff;">Missing</span></td><td><code class="inline">.ag-x-snap-*</code></td></tr>
+        <tr><td>Border radius scale (beyond 2px &amp; 50%)</td><td><span class="tag" style="background:#e8a020;color:#1a1814;">Thin</span></td><td><code class="inline">.ag-x-br-*</code></td></tr>
+        <tr><td>Font style (<code class="inline">italic</code>)</td><td><span class="tag" style="background:#2d7d46;color:#fff;">Present</span></td><td><code class="inline">.s-fst-i</code> / <code class="inline">.s-fst-n</code></td></tr>
+        <tr><td>Word break</td><td><span class="tag" style="background:#2d7d46;color:#fff;">Present</span></td><td><code class="inline">.s-wb-*</code></td></tr>
+        <tr><td>Multi-column text</td><td><span class="tag" style="background:#2d7d46;color:#fff;">Present</span></td><td><code class="inline">.s-cc-*</code></td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- PLAYGROUND GRID -->
+        <tr><td><code class="inline">.s-ta-j</code></td><td>text-align</td><td>justify</td></tr>
+        <tr><td><code class="inline">.s-ta-i</code></td><td>text-align</td><td>inherit</td></tr>
+        <tr><td><code class="inline">.s-to-e</code></td><td>text-overflow</td><td>ellipsis</td></tr>
+        <tr><td><code class="inline">.s-ws-nw</code></td><td>white-space</td><td>nowrap</td></tr>
+        <tr><td><code class="inline">.s-ws-n</code></td><td>white-space</td><td>normal</td></tr>
+        <tr><td><code class="inline">.s-fst-n</code></td><td>font-style</td><td>normal</td></tr>
+        <tr><td><code class="inline">.s-fst-i</code></td><td>font-style</td><td>italic <code class="inline">!important</code></td></tr>
+        <tr><td><code class="inline">.t-s-1</code></td><td>text-shadow</td><td>Subtle dark drop shadow</td></tr>
+        <tr><td><code class="inline">.l-h</code></td><td>Animated underline</td><td>Hover reveals colour underline (same as <code class="inline">p a</code>)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Word Break</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-wb-ba</code></td><td>break-all</td></tr>
+        <tr><td><code class="inline">.s-wb-bw</code></td><td>break-word</td></tr>
+        <tr><td><code class="inline">.s-wb-inh</code></td><td>inherit</td></tr>
+        <tr><td><code class="inline">.s-wb-ini</code></td><td>normal (initial)</td></tr>
+        <tr><td><code class="inline">.s-wb-u</code></td><td>unset</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- OBJECT FIT & VISIBILITY -->
+  <section class="doc-section" id="object-visibility">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Object Fit, Visibility &amp; Overflow</h2>
+    <p class="section-desc">Utilities for image/video fitting, element visibility, overflow control, vertical alignment, and pointer events.</p>
+    <div class="subsection-title">Object Fit &amp; Position</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-of-cv</code></td><td>object-fit</td><td>cover</td></tr>
+        <tr><td><code class="inline">.s-of-cn</code></td><td>object-fit</td><td>contain</td></tr>
+        <tr><td><code class="inline">.s-of-f</code></td><td>object-fit</td><td>fill</td></tr>
+        <tr><td><code class="inline">.s-op-c</code></td><td>object-position</td><td>center</td></tr>
+        <tr><td><code class="inline">.s-op-t</code></td><td>object-position</td><td>top</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Visibility &amp; Opacity</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-v-h</code></td><td>visibility</td><td>hidden</td></tr>
+        <tr><td><code class="inline">.s-v-v</code></td><td>visibility</td><td>visible <code class="inline">!important</code></td></tr>
+        <tr><td><code class="inline">.s-op-1</code></td><td>opacity</td><td>1 <code class="inline">!important</code></td></tr>
+        <tr><td><code class="inline">.s-a-n</code></td><td>animation</td><td>none</td></tr>
+        <tr><td><code class="inline">.s-pe-n</code></td><td>pointer-events</td><td>none</td></tr>
+        <tr><td><code class="inline">.visuallyhidden</code></td><td>Accessible hide</td><td>Visually hidden but readable by screen readers (1px clipped)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Overflow</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-o-h</code></td><td>overflow: hidden</td></tr>
+        <tr><td><code class="inline">.s-o-i</code></td><td>overflow: inherit</td></tr>
+        <tr><td><code class="inline">.s-o-a</code></td><td>overflow: auto</td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Vertical Align, Float &amp; Cursor</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-va-m</code></td><td>vertical-align</td><td>middle</td></tr>
+        <tr><td><code class="inline">.s-va-s</code></td><td>vertical-align</td><td>sub</td></tr>
+        <tr><td><code class="inline">.s-va-t</code></td><td>vertical-align</td><td>top</td></tr>
+        <tr><td><code class="inline">.s-va-b</code></td><td>vertical-align</td><td>bottom</td></tr>
+        <tr><td><code class="inline">.s-f-l</code></td><td>float</td><td>left</td></tr>
+        <tr><td><code class="inline">.s-f-r</code></td><td>float</td><td>right</td></tr>
+        <tr><td><code class="inline">.s-f-n</code></td><td>float</td><td>none</td></tr>
+        <tr><td><code class="inline">.s-c-p</code></td><td>cursor</td><td>pointer</td></tr>
+        <tr><td><code class="inline">.s-b-n</code></td><td>border</td><td>none <code class="inline">!important</code></td></tr>
+        <tr><td><code class="inline">.s-br-2</code></td><td>border-radius</td><td>2px</td></tr>
+        <tr><td><code class="inline">.s-br-50</code></td><td>border-radius</td><td>50% (circle)</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- MULTI-COLUMN & ORDER -->
+  <section class="doc-section" id="columns-order">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Multi-Column &amp; Order</h2>
+    <p class="section-desc">CSS multi-column layout utilities for masonry-style text flows, and flex order overrides.</p>
+    <div class="subsection-title">Column Count</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>column-count</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-cc-1</code></td><td>1</td><td>Single column (reset)</td></tr>
+        <tr><td><code class="inline">.s-cc-2</code></td><td>2</td><td>Two-column text flow</td></tr>
+        <tr><td><code class="inline">.s-cc-3</code></td><td>3</td><td>Three-column text flow</td></tr>
+        <tr><td><code class="inline">.s-cc-4</code></td><td>4</td><td>Four-column text flow</td></tr>
+        <tr><td><code class="inline">.s-cc-5</code></td><td>5</td><td>Five-column text flow</td></tr>
+        <tr><td><code class="inline">.s-cc-inh</code></td><td>inherit</td><td></td></tr>
+        <tr><td><code class="inline">.s-cc-a / .s-cc-u</code></td><td>unset</td><td></td></tr>
+        <tr><td><code class="inline">.s-bi-ac</code></td><td>break-inside: avoid-column</td><td>Prevents item from splitting across columns</td></tr>
+        <tr><td><code class="inline">.s-bi-a</code></td><td>break-inside: auto</td><td></td></tr>
+      </tbody></table>
+    </div>
+    <div class="subsection-title">Flex Order</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>order value</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.s-o-0</code></td><td>0 (default)</td></tr>
+        <tr><td><code class="inline">.s-o-1</code></td><td>1</td></tr>
+        <tr><td><code class="inline">.s-o-2</code></td><td>2</td></tr>
+        <tr><td><code class="inline">.s-o-3</code></td><td>3</td></tr>
+        <tr><td><code class="inline">.s-o-4</code></td><td>4</td></tr>
+        <tr><td><code class="inline">.s-o-5</code></td><td>5</td></tr>
+        <tr><td><code class="inline">.s-o-inh</code></td><td>inherit</td></tr>
+        <tr><td><code class="inline">.s-o-u</code></td><td>unset</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- IMAGE UTILITIES -->
+  <section class="doc-section" id="images">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Image Utilities</h2>
+    <p class="section-desc">AG provides lazy-loading hooks, sizing helpers, and card image overlay effects for images.</p>
+    <div class="subsection-title">Lazy Loading</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class / Attribute</th><th>Behaviour</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">img.ag-lazy</code></td><td>Shows an animated red spinner placeholder while the image is not yet loaded</td></tr>
+        <tr><td><code class="inline">img.ag-lazy.ag-lazy-s</code></td><td>Image has loaded — applies a subtle fade-in transition (<code class="inline">0.1s cubic-bezier</code>). Add this class via JS after the image loads</td></tr>
+        <tr><td><code class="inline">img:not([src]), img[src=""], img[src*=fake]</code></td><td>Automatically hidden (opacity 0, visibility hidden) — prevents broken image icons</td></tr>
+      </tbody></table>
+    </div>
+    <div class="callout tip"><span class="callout-icon">✦</span><div>Implement lazy loading by setting <code class="inline">src=""</code> initially, using an <code class="inline">IntersectionObserver</code> to swap in the real src, then adding <code class="inline">.ag-lazy-s</code> on the <code class="inline">load</code> event to trigger the fade-in.</div></div>
+    <div class="subsection-title">Card Image Overlays</div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.ca-ol</code></td><td>Gradient overlay — applies a dark bottom-to-top gradient over the image via <code class="inline">::after</code>, and an inset border frame via <code class="inline">::before</code></td></tr>
+        <tr><td><code class="inline">.ca-sl</code></td><td>Zoom-on-hover — applies a smooth <code class="inline">scale(1.1)</code> to the child <code class="inline">&lt;img&gt;</code> on hover using <code class="inline">translateZ(0)</code> for GPU compositing</td></tr>
+        <tr><td><code class="inline">.ca-m</code></td><td>Absolute positioned marker in the top-right corner of the card (right: 25px, top: 25px)</td></tr>
+        <tr><td><code class="inline">.ca-c</code></td><td>Card content region — adds <code class="inline">margin-bottom: 1.6rem</code></td></tr>
+        <tr><td><code class="inline">.im-w-100</code></td><td>Sets image width to 100px</td></tr>
+        <tr><td><code class="inline">.im-bn</code></td><td>Sets element height to 800px (banner height helper)</td></tr>
+      </tbody></table>
+    </div>
+    <div class="code-block"><div class="code-block-header"><span class="code-lang">HTML</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>&lt;!-- Lazy loaded image with spinner placeholder --&gt;
+&lt;img class="ag-lazy" src="" data-src="photo.jpg" /&gt;
+
+&lt;!-- Card with zoom overlay --&gt;
+&lt;div class="card"&gt;
+  &lt;div class="ca-i ca-sl ca-ol" style="position:relative;overflow:hidden;"&gt;
+    &lt;img src="photo.jpg" class="s-w-100 s-of-cv" style="display:block;" /&gt;
+  &lt;/div&gt;
+  &lt;div class="ca-c"&gt;Card content&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+  </section>
+
+  <!-- RESPONSIVE PADDING OVERRIDES -->
+  <section class="doc-section" id="responsive-padding">
+    <p class="section-eyebrow">Utilities</p>
+    <h2 class="section-title">Responsive Padding Overrides</h2>
+    <p class="section-desc">These classes reduce padding at specific breakpoints — useful when desktop spacious padding becomes too heavy on tablet/mobile. They activate at <code class="inline">max-width: 1024px</code>.</p>
+    <div class="callout info"><span class="callout-icon">ℹ</span><div>The naming pattern is <code class="inline">.g-{original-px}-p-{reduced-px}</code>. For example <code class="inline">.g-50-p-10</code> means "if you applied <code class="inline">.p-50</code>, this shrinks it to 10px on ≤1024px screens". Direction suffixes work identically to standard padding classes.</div></div>
+    <div class="doc-table-wrap">
+      <table class="doc-table"><thead><tr><th>Class</th><th>Breakpoint</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">.g-50-p-10</code></td><td>≤1024px</td><td>padding: 10px</td></tr>
+        <tr><td><code class="inline">.g-50-p-t-10</code></td><td>≤1024px</td><td>padding-top: 10px</td></tr>
+        <tr><td><code class="inline">.g-50-p-b-10</code></td><td>≤1024px</td><td>padding-bottom: 10px</td></tr>
+        <tr><td><code class="inline">.g-50-p-tb-10</code></td><td>≤1024px</td><td>padding-top + bottom: 10px</td></tr>
+        <tr><td><code class="inline">.g-50-p-l-10</code></td><td>≤1024px</td><td>padding-left: 10px</td></tr>
+        <tr><td><code class="inline">.g-50-p-r-10</code></td><td>≤1024px</td><td>padding-right: 10px</td></tr>
+        <tr><td><code class="inline">.g-50-p-lr-10</code></td><td>≤1024px</td><td>padding-left + right: 10px</td></tr>
+        <tr><td><code class="inline">.g-100-p-20</code></td><td>≤1024px</td><td>padding: 20px</td></tr>
+        <tr><td><code class="inline">.g-100-p-lr-10</code></td><td>≤1024px</td><td>padding-left + right: 10px</td></tr>
+        <tr><td><code class="inline">.g-200-p-30</code></td><td>≤1024px</td><td>padding: 30px</td></tr>
+        <tr><td><code class="inline">.g-200-p-lr-30</code></td><td>≤1024px</td><td>padding-left + right: 30px</td></tr>
+        <tr><td><code class="inline">.g-16-p-8</code></td><td>≤1024px</td><td>padding: 8px (and directional variants)</td></tr>
+        <tr><td><code class="inline">.p-lr-10-xl</code></td><td>1025px–1439px only</td><td>padding-left + right: 10px</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- PLAYGROUND GRID -->
+  <section class="doc-section" id="playground-grid">
+    <p class="section-eyebrow">Playground</p>
+    <h2 class="section-title">Live Grid Editor</h2>
+    <p class="section-desc">Edit the HTML below — the preview syncs on every keystroke. Try <code class="inline">ag-c</code> fractions like <code class="inline">6/12</code>, <code class="inline">4/12</code>, <code class="inline">1/12</code>, or nest rows with <code class="inline">ag-r ag-c</code> on the same element.</p>
+    <div class="playground">
+      <div class="playground-header">
+        <div class="playground-dot"></div><div class="playground-dot"></div><div class="playground-dot"></div>
+        <span class="playground-label">grid-playground.html — edit &amp; preview syncs instantly</span>
+      </div>
+      <div class="playground-body">
+        <div class="playground-editor">
+          <div class="playground-editor-label">✏ Edit HTML</div>
+          <textarea class="playground-textarea" id="gridEditor" spellcheck="false">&lt;!-- ① Half / Half --&gt;
+&lt;div ag-r style="margin-bottom:10px;"&gt;
+  &lt;div ag-c="6/12" style="background:rgba(200,57,43,.12);border:1px solid rgba(200,57,43,.3);padding:12px;border-radius:4px;font-family:monospace;font-size:.75rem;"&gt;6/12 — half&lt;/div&gt;
+  &lt;div ag-c="6/12" style="background:rgba(37,99,172,.1);border:1px solid rgba(37,99,172,.3);padding:12px;border-radius:4px;font-family:monospace;font-size:.75rem;"&gt;6/12 — half&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- ② Thirds --&gt;
+&lt;div ag-r style="margin-bottom:10px;"&gt;
+  &lt;div ag-c="4/12" style="background:rgba(200,57,43,.12);border:1px solid rgba(200,57,43,.3);padding:12px;border-radius:4px;font-family:monospace;font-size:.75rem;"&gt;4/12&lt;/div&gt;
+  &lt;div ag-c="4/12" style="background:rgba(37,99,172,.1);border:1px solid rgba(37,99,172,.3);padding:12px;border-radius:4px;font-family:monospace;font-size:.75rem;"&gt;4/12&lt;/div&gt;
+  &lt;div ag-c="4/12" style="background:rgba(45,125,70,.1);border:1px solid rgba(45,125,70,.3);padding:12px;border-radius:4px;font-family:monospace;font-size:.75rem;"&gt;4/12&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- ③ 1/12 narrow sidebar --&gt;
+&lt;div ag-r style="margin-bottom:10px;"&gt;
+  &lt;div ag-c="1/12" style="background:rgba(200,57,43,.18);border:1px solid rgba(200,57,43,.3);padding:12px;border-radius:4px;font-family:monospace;font-size:.7rem;writing-mode:horizontal-tb;"&gt;1/12&lt;/div&gt;
+  &lt;div ag-c="11/12" style="background:rgba(37,99,172,.1);border:1px solid rgba(37,99,172,.3);padding:12px;border-radius:4px;font-family:monospace;font-size:.75rem;"&gt;11/12 — main&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- ④ Nested grid: ag-r ag-c on same div --&gt;
+&lt;div ag-r&gt;
+  &lt;div ag-r ag-c="4/12" style="background:rgba(200,57,43,.05);border:1px dashed rgba(200,57,43,.4);border-radius:4px;padding:4px;"&gt;
+    &lt;div ag-c style="background:rgba(200,57,43,.18);border:1px solid rgba(200,57,43,.4);padding:10px;border-radius:3px;font-family:monospace;font-size:.7rem;text-align:center;"&gt;inner A&lt;/div&gt;
+    &lt;div ag-c style="background:rgba(45,125,70,.18);border:1px solid rgba(45,125,70,.4);padding:10px;border-radius:3px;font-family:monospace;font-size:.7rem;text-align:center;"&gt;inner B&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div ag-c="8/12" style="background:rgba(37,99,172,.1);border:1px solid rgba(37,99,172,.3);padding:12px;border-radius:4px;font-family:monospace;font-size:.75rem;"&gt;8/12 sibling&lt;/div&gt;
+&lt;/div&gt;</textarea>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <div class="playground-preview-label">▶ Live Preview</div>
+          <div class="playground-preview-wrap">
+            <div class="playground-preview" id="gridPreview"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAYGROUND BUTTONS -->
+  <section class="doc-section" id="playground-buttons">
+    <p class="section-eyebrow">Playground</p>
+    <h2 class="section-title">Live Button Editor</h2>
+    <p class="section-desc">Try all button classes live. Add modifiers like <code class="inline">.r-b</code> or combine with flex utilities.</p>
+    <div class="playground">
+      <div class="playground-header">
+        <div class="playground-dot"></div><div class="playground-dot"></div><div class="playground-dot"></div>
+        <span class="playground-label">buttons-playground.html</span>
+      </div>
+      <div class="playground-body">
+        <div class="playground-editor">
+          <div class="playground-editor-label">✏ Edit HTML</div>
+          <textarea class="playground-textarea" id="btnEditor" spellcheck="false">&lt;div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:16px;"&gt;
+  &lt;a href="#" class="a-b-1"&gt;Solid Button&lt;/a&gt;
+  &lt;a href="#" class="a-b-2"&gt;Outlined&lt;/a&gt;
+  &lt;a href="#" class="a-b-3"&gt;Ghost&lt;/a&gt;
+  &lt;a href="#" class="a-b-1 r-b"&gt;Raised&lt;/a&gt;
+  &lt;a href="#" class="a-b-5"&gt;Compact&lt;/a&gt;
+  &lt;button class="f-b-1" style="font-size:1rem !important;"&gt;★&lt;/button&gt;
+&lt;/div&gt;</textarea>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <div class="playground-preview-label">▶ Live Preview</div>
+          <div class="playground-preview-wrap">
+            <div class="playground-preview" id="btnPreview"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAYGROUND FLEX -->
+  <section class="doc-section" id="playground-flex">
+    <p class="section-eyebrow">Playground</p>
+    <h2 class="section-title">Live Flex Editor</h2>
+    <p class="section-desc">Experiment with flex utility classes. Add <code class="inline">s-f-jc-*</code>, <code class="inline">s-f-ai-*</code>, and <code class="inline">s-f-fd-*</code> to see results instantly.</p>
+    <div class="playground">
+      <div class="playground-header">
+        <div class="playground-dot"></div><div class="playground-dot"></div><div class="playground-dot"></div>
+        <span class="playground-label">flex-playground.html</span>
+      </div>
+      <div class="playground-body">
+        <div class="playground-editor">
+          <div class="playground-editor-label">✏ Edit HTML</div>
+          <textarea class="playground-textarea" id="flexEditor" spellcheck="false">&lt;div class="s-d-f s-f-jc-sb s-f-ai-c s-f-fw-w" style="gap:10px;min-height:120px;background:rgba(0,0,0,.04);padding:16px;border-radius:6px;"&gt;
+  &lt;div style="background:var(--c-1,#c8392b);color:#fff;padding:10px 16px;border-radius:4px;"&gt;Item A&lt;/div&gt;
+  &lt;div style="background:var(--c-10,#1a1814);color:#fff;padding:10px 16px;border-radius:4px;"&gt;Item B&lt;/div&gt;
+  &lt;div style="background:var(--c-2,#c0392b);color:#fff;padding:10px 16px;border-radius:4px;"&gt;Item C&lt;/div&gt;
+&lt;/div&gt;</textarea>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <div class="playground-preview-label">▶ Live Preview</div>
+          <div class="playground-preview-wrap">
+            <div class="playground-preview" id="flexEditorPreview"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<footer style="
+  margin-left:var(--doc-sidebar-w);
+  background:var(--doc-surface);
+  border-top:1px solid var(--doc-border);
+  padding:40px 48px;
+  transition:background var(--transition),border-color var(--transition);
+">
+  <div style="max-width:960px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;">
+    <div>
+      <div style="font-family:var(--display);font-weight:900;font-size:1.1rem;color:var(--doc-accent);letter-spacing:-0.02em;margin-bottom:6px;">
+        AG<span style="color:var(--doc-text);font-weight:300;">/docs</span>
+      </div>
+      <p style="font-family:var(--mono);font-size:0.72rem;color:var(--doc-text-muted);margin:0;line-height:1.6;">
+        Internal CSS framework documentation for <strong style="color:var(--doc-text);">ibp-max</strong> · v3.1.24<br/>
+        CDN: <code style="font-family:var(--mono);font-size:0.72rem;background:var(--doc-surface-2);color:var(--doc-accent);padding:2px 6px;border-radius:3px;border:1px solid var(--doc-border);">https://cdn.jsdelivr.net/npm/ibp-max@3.1.24/ag.css</code>
+      </p>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+      <a href="https://rijoksd.netlify.app/" target="_blank" rel="noopener" style="
+        display:inline-flex;align-items:center;gap:10px;
+        font-family:var(--mono);font-size:0.78rem;
+        color:var(--doc-text-muted);text-decoration:none;
+        padding:8px 14px;border:1px solid var(--doc-border);
+        border-radius:var(--doc-radius);
+        background:var(--doc-surface-2);
+        transition:all var(--transition);
+      " onmouseover="this.style.borderColor='var(--doc-accent)';this.style.color='var(--doc-accent)'" onmouseout="this.style.borderColor='var(--doc-border)';this.style.color='var(--doc-text-muted)'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        rijoksd.netlify.app
+      </a>
+      <p style="font-family:var(--mono);font-size:0.68rem;color:var(--doc-text-muted);margin:0;">
+        Crafted by <strong style="color:var(--doc-text);">Rijo Sebastian</strong>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+@media(max-width:900px){
+  footer{ margin-left:0 !important; padding:32px 20px !important; }
+  footer > div { flex-direction:column; align-items:flex-start !important; }
+  footer > div > div:last-child { align-items:flex-start !important; }
+}
+</style>
+
+<script>
+// =============================================================
+// THEME TOGGLE
+// =============================================================
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon   = document.getElementById('themeIcon');
+const themeLabel  = document.getElementById('themeLabel');
+let isDark = false;
+themeToggle.addEventListener('click', () => {
+  isDark = !isDark;
+  document.body.classList.toggle('dark-theme', isDark);
+  themeIcon.textContent  = isDark ? '☀' : '☽';
+  themeLabel.textContent = isDark ? 'Light' : 'Dark';
+});
+
+// =============================================================
+// SCROLL SPY + PROGRESS
+// =============================================================
+const sections     = document.querySelectorAll('.doc-section');
+const sidebarLinks = document.querySelectorAll('.sidebar-link');
+const scrollBar    = document.getElementById('scrollProgress');
+
+// Hoist these so the sidebar-link click handler can reference them
+const sidebar        = document.getElementById('sidebar');
+const sidebarToggle  = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const globalSearch   = document.getElementById('globalSearch');
+const searchCount    = document.getElementById('searchCount');
+const searchNoRes    = document.getElementById('searchNoResults');
+const searchNoResQ   = document.getElementById('searchNoResultsQ');
+const allSections    = Array.from(document.querySelectorAll('.doc-section'));
+let sectionOriginals = null;
+
+function updateScrollSpy() {
+  const scrollY = window.scrollY;
+  const docH = document.documentElement.scrollHeight - window.innerHeight;
+  scrollBar.style.width = (scrollY / docH * 100) + '%';
+  let activeId = null;
+  sections.forEach(sec => { if (scrollY >= sec.offsetTop - 90) activeId = sec.id; });
+  sidebarLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href').slice(1) === activeId);
+  });
+}
+window.addEventListener('scroll', updateScrollSpy, { passive: true });
+updateScrollSpy();
+
+sidebarLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const targetId = link.getAttribute('href').slice(1);
+
+    // ---- Close mobile sidebar ----
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('active');
+
+    // ---- If search is active, clear it first so hidden sections reappear ----
+    if (globalSearch.value.trim()) {
+      globalSearch.value = '';
+      // Restore all sections (mirrors the clear-mode logic in the search handler)
+      allSections.forEach((sec, i) => {
+        sec.innerHTML = sectionOriginals[i];
+        sec.classList.remove('gs-hidden');
+      });
+      searchCount.style.display = 'none';
+      searchNoRes.style.display = 'none';
+      // Re-init playgrounds after innerHTML restore
+      initPlayground('gridEditor',      'gridPreview');
+      initPlayground('btnEditor',       'btnPreview');
+      initPlayground('flexEditor',      'flexEditorPreview');
+    }
+
+    // ---- Scroll to target (defer one tick so DOM is visible first) ----
+    requestAnimationFrame(() => {
+      const t = document.getElementById(targetId);
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+});
+
+// =============================================================
+// MOBILE SIDEBAR TOGGLE
+// =============================================================
+sidebarToggle.addEventListener('click', () => {
+  const isOpen = sidebar.classList.toggle('open');
+  sidebarOverlay.classList.toggle('active', isOpen);
+});
+sidebarOverlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  sidebarOverlay.classList.remove('active');
+});
+
+// =============================================================
+// COPY CODE
+// =============================================================
+function copyCode(btn) {
+  const code = btn.closest('.code-block').querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1800);
+  });
+}
+
+// =============================================================
+// PLAYGROUND — oninput immediate sync + Tab support
+// =============================================================
+function initPlayground(editorId, previewId) {
+  const editor  = document.getElementById(editorId);
+  const preview = document.getElementById(previewId);
+  if (!editor || !preview) return;
+
+  // FIX: oninput fires on every single character change
+  function update() { preview.innerHTML = editor.value; }
+  editor.addEventListener('input', update);  // immediate sync
+  update();
+
+  editor.addEventListener('keydown', e => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const s = editor.selectionStart, end = editor.selectionEnd;
+      editor.value = editor.value.substring(0, s) + '  ' + editor.value.substring(end);
+      editor.selectionStart = editor.selectionEnd = s + 2;
+      update();
+    }
+  });
+}
+
+initPlayground('gridEditor',      'gridPreview');
+initPlayground('btnEditor',       'btnPreview');
+initPlayground('flexEditor',      'flexEditorPreview');
+
+// =============================================================
+// COLOR PALETTE
+// =============================================================
+const colorData = [
+  { name:'--c-1',  label:'Brand Primary',  fallback:'#e84040' },
+  { name:'--c-2',  label:'Brand Dark',     fallback:'#c0392b' },
+  { name:'--c-3',  label:'Surface Light',  fallback:'#f5f3ef' },
+  { name:'--c-4',  label:'Surface',        fallback:'#eeebe5' },
+  { name:'--c-5',  label:'Border Light',   fallback:'#e2ddd6' },
+  { name:'--c-6',  label:'Muted',          fallback:'#b0aaa0' },
+  { name:'--c-7',  label:'Surface Hover',  fallback:'#d0ccc6' },
+  { name:'--c-8',  label:'Text Muted',     fallback:'#888480' },
+  { name:'--c-9',  label:'Text Secondary', fallback:'#555050' },
+  { name:'--c-10', label:'Text Primary',   fallback:'#1a1814' },
+  { name:'--c-11', label:'Absolute Dark',  fallback:'#000000' },
+];
+const colorGrid = document.getElementById('colorGrid');
+colorData.forEach(c => {
+  const resolved = getComputedStyle(document.documentElement).getPropertyValue(c.name).trim() || c.fallback;
+  colorGrid.innerHTML += `<div class="color-swatch">
+    <div class="color-swatch-preview" style="background:${resolved};"></div>
+    <div class="color-swatch-info">
+      <span class="color-swatch-name">${c.label}</span>
+      <span class="color-swatch-var">${c.name}</span>
+    </div></div>`;
+});
+
+// =============================================================
+// TYPOGRAPHY SCALE
+// =============================================================
+const typeSizes = [
+  {cls:'.f-s-0',approx:'10px'},{cls:'.f-s-1',approx:'12px'},{cls:'.f-s-2',approx:'14px'},
+  {cls:'.f-s-3',approx:'16px — body'},{cls:'.f-s-4',approx:'18px'},{cls:'.f-s-5',approx:'20px'},
+  {cls:'.f-s-6',approx:'24px'},{cls:'.f-s-7',approx:'32px'},{cls:'.f-s-8',approx:'40px'},
+  {cls:'.f-s-9',approx:'48px'},{cls:'.f-s-10',approx:'64px'},{cls:'.f-s-11',approx:'80px'},
+];
+const fontSizePx = [10,12,14,16,18,20,24,32,40,48,64,80];
+const typeScale = document.getElementById('typeScale');
+typeSizes.forEach((t,i) => {
+  typeScale.innerHTML += `<div class="type-scale-row">
+    <span class="type-scale-label">${t.cls}</span>
+    <span class="type-scale-value">${t.approx}</span>
+    <span class="type-scale-sample" style="font-size:${fontSizePx[i]}px;line-height:1;">Ag</span>
+  </div>`;
+});
+
+// =============================================================
+// FLEX TABLE
+// =============================================================
+const flexData = [
+  ['.s-d-f','display','flex'],['.s-d-if','display','inline-flex'],
+  ['.s-f-jc-c','justify-content','center'],['.s-f-jc-fs','justify-content','flex-start'],
+  ['.s-f-jc-fe','justify-content','flex-end'],['.s-f-jc-sb','justify-content','space-between'],
+  ['.s-f-jc-sa','justify-content','space-around'],['.s-f-jc-se','justify-content','space-evenly'],
+  ['.s-f-jc-inh','justify-content','inherit'],['.s-f-jc-ini','justify-content','normal'],['.s-f-jc-u','justify-content','unset'],
+  ['.s-f-ji-c','justify-items','center'],['.s-f-ji-fs','justify-items','flex-start'],
+  ['.s-f-ji-fe','justify-items','flex-end'],['.s-f-ji-s','justify-items','stretch'],
+  ['.s-f-ji-inh','justify-items','inherit'],['.s-f-ji-ini','justify-items','legacy'],['.s-f-ji-u','justify-items','unset'],
+  ['.s-f-js-c','justify-self','center'],['.s-f-js-fs','justify-self','flex-start'],
+  ['.s-f-js-fe','justify-self','flex-end'],['.s-f-js-s','justify-self','stretch'],
+  ['.s-f-js-inh','justify-self','inherit'],['.s-f-js-ini','justify-self','auto'],['.s-f-js-u','justify-self','unset'],
+  ['.s-f-ac-c','align-content','center'],['.s-f-ac-fs','align-content','flex-start'],
+  ['.s-f-ac-fe','align-content','flex-end'],['.s-f-ac-sa','align-content','space-around'],
+  ['.s-f-ac-sb','align-content','space-between'],['.s-f-ac-se','align-content','space-evenly'],
+  ['.s-f-ac-inh','align-content','inherit'],['.s-f-ac-ini','align-content','normal'],['.s-f-ac-u','align-content','unset'],
+  ['.s-f-ai-c','align-items','center'],['.s-f-ai-fs','align-items','flex-start'],
+  ['.s-f-ai-fe','align-items','flex-end'],['.s-f-ai-e','align-items','end'],
+  ['.s-f-ai-s','align-items','stretch (!important)'],['.s-f-ai-inh','align-items','inherit'],
+  ['.s-f-ai-ini','align-items','normal'],['.s-f-ai-u','align-items','unset'],
+  ['.s-f-as-c','align-self','center'],['.s-f-as-fs','align-self','flex-start'],
+  ['.s-f-as-fe','align-self','flex-end'],['.s-f-as-s','align-self','stretch'],
+  ['.s-f-as-inh','align-self','inherit'],['.s-f-as-ini','align-self','auto'],['.s-f-as-u','align-self','unset'],
+  ['.s-f-fd-r','flex-direction','row'],['.s-f-fd-rr','flex-direction','row-reverse'],
+  ['.s-f-fd-c','flex-direction','column'],['.s-f-fd-cr','flex-direction','column-reverse'],
+  ['.s-f-fd-inh','flex-direction','inherit'],['.s-f-fd-u','flex-direction','unset'],
+  ['.s-f-fw-w','flex-wrap','wrap'],['.s-f-fw-nw','flex-wrap','nowrap'],
+  ['.s-f-fw-wr','flex-wrap','wrap-reverse'],['.s-f-fw-inh','flex-wrap','inherit'],['.s-f-fw-u','flex-wrap','unset'],
+  ['.s-f-fg-1','flex-grow','1'],['.s-f-fg-2','flex-grow','2'],
+  ['.s-f-fg-inh','flex-grow','inherit'],['.s-f-fg-ini','flex-grow','0'],['.s-f-fg-u','flex-grow','unset'],
+  ['.s-f-f-1','flex','1'],['.s-f-f-a','flex','auto'],
+  ['.s-f-f-inh','flex','inherit'],['.s-f-f-ini','flex','initial'],['.s-f-f-u','flex','unset'],
+  ['.s-f-fb-a','flex-basis','auto'],['.s-f-fb-0','flex-basis','0'],
+  ['.s-f-fb-inh','flex-basis','inherit'],['.s-f-fb-ini','flex-basis','auto'],['.s-f-fb-u','flex-basis','unset'],
+  ['.s-f-fs-0','flex-shrink','0'],['.s-f-fs-1','flex-shrink','1'],['.s-f-fs-2','flex-shrink','2'],
+  ['.s-f-fs-inh','flex-shrink','inherit'],['.s-f-fs-ini','flex-shrink','1'],['.s-f-fs-u','flex-shrink','unset'],
+];
+
+function renderTable(bodyId, data) {
+  document.getElementById(bodyId).innerHTML = data.map(([cls,prop,val]) =>
+    `<tr><td><code class="inline">${cls}</code></td><td>${prop}</td><td>${val}</td></tr>`
+  ).join('');
+}
+renderTable('flexBody', flexData);
+
+function filterTable(inputId, bodyId) {
+  const input = document.getElementById(inputId);
+  const body  = document.getElementById(bodyId);
+  input.addEventListener('input', () => {
+    const q = input.value.toLowerCase();
+    body.querySelectorAll('tr').forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+}
+filterTable('flexSearch',    'flexBody');
+
+// PADDING TABLE
+const paddingSizes = [0,4,8,12,16,20,50,100,200];
+const paddingDirs  = [
+  ['','padding','all sides'],['-t','padding-top','top'],['-b','padding-bottom','bottom'],
+  ['-l','padding-left','left'],['-r','padding-right','right'],
+  ['-tb','padding-top + padding-bottom','top & bottom'],['-lr','padding-left + padding-right','left & right'],
+];
+const paddingData = [];
+paddingSizes.forEach(s => paddingDirs.forEach(([d,p]) => paddingData.push([`.p${d}-${s}`, p, `${s}px`])));
+paddingData.push(['.s-ml-a','margin-left','auto'],['.s-mr-a','margin-right','auto'],['.s-m-a','margin','auto (!important)']);
+renderTable('paddingBody', paddingData);
+filterTable('paddingSearch', 'paddingBody');
+
+// MARGIN TABLE
+const marginSizes = [0,4,8,12,16,50];
+const marginDirs  = [
+  ['','margin','all sides'],['-t','margin-top','top'],['-b','margin-bottom','bottom'],
+  ['-l','margin-left','left'],['-r','margin-right','right'],
+  ['-tb','margin-top + margin-bottom','top & bottom'],['-lr','margin-left + margin-right','left & right'],
+];
+const marginData = [];
+marginSizes.forEach(s => marginDirs.forEach(([d,p]) => marginData.push([`.m${d}-${s}`, p, `${s}px`])));
+renderTable('marginBody', marginData);
+filterTable('marginSearch', 'marginBody');
+
+// =============================================================
+// BUG FIX 1 — DEEP GLOBAL SEARCH with TEXT HIGHLIGHTING
+// Strategy:
+//   1. Store each searchable text node's original HTML per section.
+//   2. On each input event, restore originals, then walk text nodes
+//      to wrap matches in <mark>. Then show/hide sections.
+// =============================================================
+
+// Save originals AFTER the dynamic tables (flex/padding/margin) are rendered.
+// We defer by one tick with setTimeout so JS table rendering is complete.
+setTimeout(() => {
+  sectionOriginals = allSections.map(sec => sec.innerHTML);
+}, 0);
+
+/**
+ * Walk all text nodes inside el, and for each one that contains q,
+ * replace the text node with HTML that wraps matches in <mark>.
+ * We avoid marking inside <textarea>, <script>, <style>, and existing <mark>.
+ */
+function highlightTextNodes(el, regex) {
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+      if (!parent) return NodeFilter.FILTER_REJECT;
+      const tag = parent.tagName;
+      if (tag === 'TEXTAREA' || tag === 'SCRIPT' || tag === 'STYLE' || tag === 'MARK') {
+        return NodeFilter.FILTER_REJECT;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  }, false);
+
+  const matches = [];
+  let node;
+  while ((node = walker.nextNode())) {
+    if (regex.test(node.textContent)) matches.push(node);
+  }
+
+  matches.forEach(textNode => {
+    const span = document.createElement('span');
+    span.innerHTML = textNode.textContent.replace(regex, '<mark>$&</mark>');
+    textNode.parentNode.replaceChild(span, textNode);
+  });
+
+  return matches.length > 0;
+}
+
+globalSearch.addEventListener('input', () => {
+  if (!sectionOriginals) return; // not ready yet
+
+  const raw = globalSearch.value.trim();
+
+  // ---- CLEAR MODE ----
+  if (!raw) {
+    // Restore all originals (removes marks), show all sections
+    allSections.forEach((sec, i) => {
+      sec.innerHTML = sectionOriginals[i];
+      sec.classList.remove('gs-hidden');
+    });
+    searchCount.style.display = 'none';
+    searchNoRes.style.display = 'none';
+    // Re-init playgrounds after innerHTML restore
+    initPlayground('gridEditor',      'gridPreview');
+    initPlayground('btnEditor',       'btnPreview');
+    initPlayground('flexEditor',      'flexEditorPreview');
+    return;
+  }
+
+  // ---- SEARCH MODE ----
+  const escaped = raw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex   = new RegExp(escaped, 'gi');
+
+  let totalMatches = 0;
+  let visibleCount = 0;
+  let firstVisibleSection = null; // track first match for auto-scroll
+
+  allSections.forEach((sec, i) => {
+    sec.innerHTML = sectionOriginals[i];
+
+    const secText = sec.textContent || '';
+    if (!secText.toLowerCase().includes(raw.toLowerCase())) {
+      sec.classList.add('gs-hidden');
+      return;
+    }
+
+    sec.classList.remove('gs-hidden');
+    visibleCount++;
+    if (!firstVisibleSection) firstVisibleSection = sec; // capture first match
+
+    const rawMatches = (secText.match(regex) || []).length;
+    totalMatches += rawMatches;
+
+    highlightTextNodes(sec, new RegExp(escaped, 'gi'));
+  });
+
+  // Re-bind playgrounds (restored innerHTML breaks event listeners)
+  initPlayground('gridEditor',      'gridPreview');
+  initPlayground('btnEditor',       'btnPreview');
+  initPlayground('flexEditor',      'flexEditorPreview');
+
+  // Auto-scroll to first matching section
+  if (firstVisibleSection) {
+    requestAnimationFrame(() => {
+      firstVisibleSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  // Show count badge
+  if (totalMatches > 0) {
+    searchCount.textContent  = `${totalMatches} match${totalMatches !== 1 ? 'es' : ''}`;
+    searchCount.style.display = 'block';
+  } else {
+    searchCount.style.display = 'none';
+  }
+
+  // Show/hide no-results banner
+  if (visibleCount === 0) {
+    searchNoResQ.textContent  = raw;
+    searchNoRes.style.display = 'block';
+  } else {
+    searchNoRes.style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>
